@@ -24,11 +24,11 @@ import org.apache.sling.api.adapter.Adaptable;
 /**
  * Test {@link UrlHandlerImpl} methods with current request and current page null.
  */
-public class UrlHandlerImplWithoutRequestPageTest extends UrlHandlerImplTest {
+public class UrlHandlerImplWithoutRequestTest extends UrlHandlerImplTest {
 
   @Override
   protected Adaptable adaptable() {
-    return context.request().getResource();
+    return context.currentResource();
   }
 
 }
