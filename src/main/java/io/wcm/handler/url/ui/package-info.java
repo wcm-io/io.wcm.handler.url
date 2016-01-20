@@ -2,7 +2,7 @@
  * #%L
  * wcm.io
  * %%
- * Copyright (C) 2014 wcm.io
+ * Copyright (C) 2015 wcm.io
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,29 +17,8 @@
  * limitations under the License.
  * #L%
  */
-package io.wcm.handler.url.suffix;
-
-import org.apache.sling.api.resource.Resource;
-
-import com.day.cq.commons.Filter;
-
 /**
- * Filters resources by resource type (appends /apps/ prefix if needed).
+ * Sling model classes for UI views.
  */
-class ResourceTypeFilter implements Filter<Resource> {
-
-  private final String resourceType;
-
-  /**
-   * @param resourceType The resource type to be included
-   */
-  ResourceTypeFilter(String resourceType) {
-    this.resourceType = resourceType;
-  }
-
-  @Override
-  public boolean includes(Resource resource) {
-    return resource.isResourceType(resourceType);
-  }
-
-}
+@org.osgi.annotation.versioning.Version("0.5.0")
+package io.wcm.handler.url.ui;
