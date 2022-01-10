@@ -61,6 +61,10 @@ To use this module you have to deploy also:
 | [wcm.io Handler Commons](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.commons) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.commons/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.commons) |
 
 
+### GitHub Repository
+
+Sources: https://github.com/wcm-io/io.wcm.handler.url
+
 
 [usage]: usage.html
 [general-concepts]: general-concepts.html
