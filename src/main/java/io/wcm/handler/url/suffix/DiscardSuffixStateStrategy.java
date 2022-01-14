@@ -35,7 +35,7 @@ public final class DiscardSuffixStateStrategy implements SuffixStateKeepingStrat
   @Override
   public @NotNull List<String> getSuffixPartsToKeep(@NotNull SlingHttpServletRequest request) {
     // just return a empty list
-    return new ArrayList<String>();
+    return new ArrayList<>();
   }
 
 }

@@ -46,7 +46,6 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 import com.day.cq.wcm.api.Page;
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
@@ -195,7 +194,7 @@ public final class SuffixBuilder {
    * @param value the value
    * @return this
    */
-  @SuppressWarnings({ "null", "unused" })
+  @SuppressWarnings({ "null", "unused", "java:S2589" })
   public @NotNull SuffixBuilder put(@NotNull String key, @NotNull Object value) {
     if (key == null) {
       throw new IllegalArgumentException("Key must not be null");
@@ -220,7 +219,7 @@ public final class SuffixBuilder {
   }
 
   private void validateValueType(Object value) {
-    Class clazz = value.getClass();
+    Class<?> clazz = value.getClass();
     boolean isValid = (clazz == String.class
         || clazz == Boolean.class
         || clazz == Integer.class
@@ -278,12 +277,7 @@ public final class SuffixBuilder {
    */
   @SuppressWarnings("null")
   public @NotNull SuffixBuilder pages(@NotNull List<Page> pages, @NotNull Page suffixBasePage) {
-    List<Resource> resources = Lists.transform(pages, new Function<Page, Resource>() {
-      @Override
-      public Resource apply(Page page) {
-        return page.adaptTo(Resource.class);
-      }
-    });
+    List<Resource> resources = Lists.transform(pages, page -> page.adaptTo(Resource.class));
     return resources(resources, AdaptTo.notNull(suffixBasePage, Resource.class));
   }
 
