@@ -22,7 +22,9 @@ package io.wcm.handler.url.impl;
 import static com.day.cq.commons.jcr.JcrConstants.JCR_PRIMARYTYPE;
 import static com.day.cq.commons.jcr.JcrConstants.NT_UNSTRUCTURED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.spy;
@@ -825,6 +827,14 @@ class UrlHandlerImplTest {
     catch (PersistenceException ex) {
       throw new RuntimeException(ex);
     }
+  }
+
+  @Test
+  void testIsExternalized() {
+    UrlHandler urlHandler = AdaptTo.notNull(adaptable(), UrlHandler.class);
+    // the full range of possible options of external/no-external URLs is tested in ExternalizerTest
+    assertTrue(urlHandler.isExternalized("http://myhost/content/page1.html"));
+    assertFalse(urlHandler.isExternalized("/content/page1.html"));
   }
 
 }

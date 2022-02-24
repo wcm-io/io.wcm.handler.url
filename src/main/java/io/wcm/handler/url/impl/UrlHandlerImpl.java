@@ -137,6 +137,11 @@ public final class UrlHandlerImpl implements UrlHandler {
     return rewrittenPath.toString();
   }
 
+  @Override
+  public boolean isExternalized(@NotNull String url) {
+    return Externalizer.isExternalized(url);
+  }
+
   String externalizeLinkUrl(final String url, final Page targetPage, final UrlMode urlMode) {
 
     // check for empty url

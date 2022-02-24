@@ -93,4 +93,18 @@ public interface UrlHandler {
   @Nullable
   String rewritePathToContext(@NotNull Resource resource, @NotNull Resource contextResource);
 
+  /**
+   * Checks if the given URL is externalized.
+   * <p>
+   * An URL is treated as externalized if:
+   * </p>
+   * <ul>
+   * <li>It starts with a protocol and a colon (e.g. http:, tel:, mailto:, javascript:)</li>
+   * <li>It starts with // or #</li>
+   * </ul>
+   * @param url URL
+   * @return true if the URL is externalized.
+   */
+  boolean isExternalized(@NotNull String url);
+
 }
