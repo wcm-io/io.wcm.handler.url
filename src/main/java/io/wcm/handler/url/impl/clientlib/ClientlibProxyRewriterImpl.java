@@ -46,8 +46,7 @@ public class ClientlibProxyRewriterImpl implements ClientlibProxyRewriter {
   private volatile ClientlibPathCache clientlibPathCache;
 
   @Deactivate
-  @SuppressWarnings("PMD.SignatureDeclareThrowsException")
-  private void deactivate() throws Exception {
+  private void deactivate() {
     if (clientlibPathCache != null) {
       this.clientlibPathCache.close();
     }

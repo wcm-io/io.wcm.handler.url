@@ -174,8 +174,7 @@ public final class SuffixParser {
       if (part.indexOf(KEY_VALUE_DELIMITER) >= 0) {
         String partKey = decodeKey(part);
         if (partKey.equals(key)) {
-          String value = decodeValue(part);
-          return value;
+          return decodeValue(part);
         }
       }
     }

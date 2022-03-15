@@ -34,24 +34,14 @@ public final class FilterOperators {
    * @return a filter that includes those elements that are included by *both* specified filters
    */
   public static <T> Predicate<T> and(final Predicate<T> filter1, final Predicate<T> filter2) {
-    return new Predicate<T>() {
-      @Override
-      public boolean test(T pElement) {
-        return filter1.test(pElement) && filter2.test(pElement);
-      }
-    };
+    return element -> filter1.test(element) && filter2.test(element);
   }
 
   /**
    * @return a filter that includes those elements that are included by *one* of the specified filters
    */
   public static <T> Predicate<T> or(final Predicate<T> filter1, final Predicate<T> filter2) {
-    return new Predicate<T>() {
-      @Override
-      public boolean test(T pElement) {
-        return filter1.test(pElement) || filter2.test(pElement);
-      }
-    };
+    return element -> filter1.test(element) || filter2.test(element);
   }
 
 }

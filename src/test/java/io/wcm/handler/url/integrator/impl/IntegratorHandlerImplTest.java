@@ -125,6 +125,7 @@ class IntegratorHandlerImplTest {
   }
 
   @Test
+  @SuppressWarnings("unused")
   void testIntegratorPageNull() {
     context.currentPage((Page)null);
     IntegratorHandler underTest = adaptable().adaptTo(IntegratorHandler.class);
