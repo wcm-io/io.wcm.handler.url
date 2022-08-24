@@ -128,4 +128,35 @@ class UrlPrefixTest {
     assertEquals("https://aemaacs-publish", applyAutoDetection("<auto>", context.request()));
   }
 
+  @Test
+  void testRequestPlaceholder_incomplete1() {
+    context.request().setHeader(HTTP_HEADER_X_FORWARDED_HOST, "aemaacs-author");
+    assertEquals("https://servername:8080", applyAutoDetection("<auto>", context.request()));
+  }
+
+  @Test
+  void testRequestPlaceholder_incomplete2() {
+    context.request().setHeader(HTTP_HEADER_X_FORWARDED_PROTO, "https");
+    assertEquals("https://servername:8080", applyAutoDetection("<auto>", context.request()));
+  }
+
+  @Test
+  void testRequestPlaceholder_incomplete3() {
+    context.request().setHeader(HTTP_HEADER_HOST, "aemaacs-publish");
+    assertEquals("https://servername:8080", applyAutoDetection("<auto>", context.request()));
+  }
+
+  @Test
+  void testRequestPlaceholder_incomplete4() {
+    context.request().setHeader(HTTP_HEADER_X_FORWARDED_SSL, VALUE_ON);
+    assertEquals("https://servername:8080", applyAutoDetection("<auto>", context.request()));
+  }
+
+  @Test
+  void testRequestPlaceholder_incomplete5() {
+    context.request().setHeader(HTTP_HEADER_HOST, "aemaacs-publish");
+    context.request().setHeader(HTTP_HEADER_X_FORWARDED_SSL, "off");
+    assertEquals("https://servername:8080", applyAutoDetection("<auto>", context.request()));
+  }
+
 }
