@@ -96,6 +96,13 @@ class UrlPrefixTest {
   }
 
   @Test
+  void testRequestPlaceholderHttps() {
+    context.request().setServerPort(8443);
+    context.request().setScheme("https");
+    assertEquals("https://servername:8443", applyAutoDetection("<auto>", context.request()));
+  }
+
+  @Test
   void testRequestPlaceholderHttpDefaultPort() {
     context.request().setServerPort(80);
     context.request().setScheme("http");
@@ -131,32 +138,32 @@ class UrlPrefixTest {
   @Test
   void testRequestPlaceholder_incomplete1() {
     context.request().setHeader(HTTP_HEADER_X_FORWARDED_HOST, "aemaacs-author");
-    assertEquals("https://servername:8080", applyAutoDetection("<auto>", context.request()));
+    assertEquals("http://servername:8080", applyAutoDetection("<auto>", context.request()));
   }
 
   @Test
   void testRequestPlaceholder_incomplete2() {
     context.request().setHeader(HTTP_HEADER_X_FORWARDED_PROTO, "https");
-    assertEquals("https://servername:8080", applyAutoDetection("<auto>", context.request()));
+    assertEquals("http://servername:8080", applyAutoDetection("<auto>", context.request()));
   }
 
   @Test
   void testRequestPlaceholder_incomplete3() {
     context.request().setHeader(HTTP_HEADER_HOST, "aemaacs-publish");
-    assertEquals("https://servername:8080", applyAutoDetection("<auto>", context.request()));
+    assertEquals("http://servername:8080", applyAutoDetection("<auto>", context.request()));
   }
 
   @Test
   void testRequestPlaceholder_incomplete4() {
     context.request().setHeader(HTTP_HEADER_X_FORWARDED_SSL, VALUE_ON);
-    assertEquals("https://servername:8080", applyAutoDetection("<auto>", context.request()));
+    assertEquals("http://servername:8080", applyAutoDetection("<auto>", context.request()));
   }
 
   @Test
   void testRequestPlaceholder_incomplete5() {
     context.request().setHeader(HTTP_HEADER_HOST, "aemaacs-publish");
     context.request().setHeader(HTTP_HEADER_X_FORWARDED_SSL, "off");
-    assertEquals("https://servername:8080", applyAutoDetection("<auto>", context.request()));
+    assertEquals("http://servername:8080", applyAutoDetection("<auto>", context.request()));
   }
 
 }
