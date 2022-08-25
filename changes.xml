@@ -23,6 +23,16 @@
     xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
   <body>
 
+    <release version="1.8.0" date="not released">
+      <action type="add" dev="sseifert"><![CDATA[
+        Placeholder <code>&lt;auto&gt;</code> can be used in the author/publish URL properties in Site Config to enable auto-detection of these URLs based on the requested URL.
+        The placeholder can be combined with a fallback URL - if auto-detection is not possible (because the link is build outside request context) the configured URL is used.
+      ]]></action>
+      <action type="update" dev="sseifert">
+        Switch to AEM 6.5.7 as minimum version.
+      </action>
+    </release>
+
     <release version="1.7.0" date="2022-03-15">
       <action type="add" dev="sseifert">
         Add UrlHandler.isExternalized.
