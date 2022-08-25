@@ -31,10 +31,14 @@ With the different Enumeration constants from [UrlModes][url-modes] you have fin
 To make sure that the externalization works properly you have to configure three Parameters in the [Context-Aware Configuration][caconfig] for configuration "wcm.io Handler Site URLs" (internal name: `io.wcm.handler.url.SiteConfig`):
 
 * `siteUrl`: Site URL on public access from outside, for non-secure access (HTTP).
-* `siteUrlSecure`: Site URL for public access from outside, for secure access (HTTPS).
-* `siteUrlAuthor`: Site URL on author instance.
+* `siteUrlSecure`: Site URL for public access from outside, for secure access (HTTPS). If not configured, `siteUrl` is used.
+* `siteUrlAuthor`: Site URL on author instance. If not configured, `siteUrl` is used.
 
 Site URL is a protocol and hostname, e.g. `http://www.mycompany.com`.
+
+Additionally, you can add a placeholder `<auto>` to the site URL string. This enables an auto-detection of the Site URL based on the host name that was used when requesting the AEM instance. This is especially useful for AEMaaCS instances where different host names are used for access from public side, and access during functional tests and UI tests executed from Cloud Manager. It is recommended to specify both placeholder `<auto>` and the actual public URL at the same time - the latter serves as fallback when the auto-detection is not possible. Auto-detection does only work, when the handler is adapted from a `SlingHttpServletRequest` instance.
+
+Example: `<auto>http://www.mycompany.com`
 
 
 ### Site Root detection

@@ -174,7 +174,8 @@ public final class UrlHandlerImpl implements UrlHandler {
   @SuppressWarnings("null")
   private String getLinkUrlPrefix(UrlMode urlMode, Page targetPage) {
     UrlMode mode = ObjectUtils.defaultIfNull(urlMode, urlHandlerConfig.getDefaultUrlMode());
-    return mode.getLinkUrlPrefix(self, instanceTypeService.getRunModes(), currentPage, targetPage);
+    String configuredUrlPrefix = mode.getLinkUrlPrefix(self, instanceTypeService.getRunModes(), currentPage, targetPage);
+    return UrlPrefix.applyAutoDetection(configuredUrlPrefix, self);
   }
 
   String externalizeResourceUrl(final String url, final Resource targetResource, final UrlMode urlMode) {
@@ -218,7 +219,8 @@ public final class UrlHandlerImpl implements UrlHandler {
   @SuppressWarnings("null")
   private String getResourceUrlPrefix(UrlMode urlMode, Resource targetResource) {
     UrlMode mode = ObjectUtils.defaultIfNull(urlMode, urlHandlerConfig.getDefaultUrlMode());
-    return mode.getResourceUrlPrefix(self, instanceTypeService.getRunModes(), currentPage, targetResource);
+    String configuredUrlPrefix = mode.getResourceUrlPrefix(self, instanceTypeService.getRunModes(), currentPage, targetResource);
+    return UrlPrefix.applyAutoDetection(configuredUrlPrefix, self);
   }
 
   String buildUrl(String path, String selector, String extension, String suffix) { //NOPMD

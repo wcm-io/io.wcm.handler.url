@@ -33,21 +33,21 @@ public @interface SiteConfig {
    * @return Site URL
    */
   @Property(label = "Site URL",
-      description = "Public website URL for non-secure access.")
+      description = "Public website URL for non-secure access. Add placeholder '<auto>' to enable auto-detection from request.")
   String siteUrl();
 
   /**
    * @return Site URL Secure
    */
   @Property(label = "Site URL Secure",
-      description = "Public website URL for secure access.")
+      description = "Public website URL for secure access. Add placeholder '<auto>' to enable auto-detection from request.")
   String siteUrlSecure();
 
   /**
    * @return Author URL
    */
   @Property(label = "Author URL",
-      description = "URL for author instance.")
+      description = "URL for author instance. Add placeholder '<auto>' to enable auto-detection from request.")
   String siteUrlAuthor();
 
 }
