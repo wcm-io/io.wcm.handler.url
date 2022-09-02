@@ -23,7 +23,14 @@
     xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
   <body>
 
-    <release version="1.8.0" date="not released">
+    <release version="1.9.0" date="2022-09-02">
+      <action type="add" dev="sseifert"><![CDATA[
+        Add UrlHandler.applySiteUrlAutoDetection method which allows to apply the Site URL auto-detection via <code>&lt;auto&gt;</code> placeholder also
+        for custom code that reads the Site URLs from Site Config directly.
+      ]]></action>
+    </release>
+
+    <release version="1.8.0" date="2022-08-25">
       <action type="add" dev="sseifert"><![CDATA[
         Placeholder <code>&lt;auto&gt;</code> can be used in the author/publish URL properties in Site Config to enable auto-detection of these URLs based on the requested URL.
         The placeholder can be combined with a fallback URL - if auto-detection is not possible (because the link is build outside request context) the configured URL is used.
