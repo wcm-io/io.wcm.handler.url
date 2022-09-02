@@ -33,6 +33,7 @@ import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.day.cq.wcm.api.Page;
 
@@ -344,6 +345,11 @@ public final class UrlHandlerImpl implements UrlHandler {
     }
 
     return urlBuilder.toString();
+  }
+
+  @Override
+  public String applySiteUrlAutoDetection(@Nullable String siteUrl) {
+    return UrlPrefix.applyAutoDetection(siteUrl, self);
   }
 
 }

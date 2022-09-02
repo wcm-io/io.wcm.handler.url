@@ -107,4 +107,21 @@ public interface UrlHandler {
    */
   boolean isExternalized(@NotNull String url);
 
+  /**
+   * Applies auto-detection of Site URL (author or publish instance) for given Site URL that is
+   * configured in {@link SiteConfig}.
+   * <p>
+   * If this Site URL contains an <code>&lt;auto&gt;</code> placeholder the Site URL detection is enabled
+   * and the Site URL is replaced with the current hostname (if possible). Otherwise the remaining part of the
+   * Site URL string is returned as fallback.
+   * </p>
+   * <p>
+   * Site URL auto-detection does only work in context of a request - outside request context the placeholders
+   * is removed and the remaining string returned as fallback.
+   * </p>
+   * @param siteUrl Site URL (author or publish) {@link SiteConfig}.
+   * @return Automatic detected Site URL or fallback
+   */
+  String applySiteUrlAutoDetection(@Nullable String siteUrl);
+
 }

@@ -33,7 +33,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import io.wcm.handler.url.UrlHandler;
 import io.wcm.handler.url.testcontext.AppAemContext;
+import io.wcm.sling.commons.adapter.AdaptTo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -119,6 +121,12 @@ class UrlPrefixTest {
   @Test
   void testRequestUrlPlaceholder() {
     assertEquals("http://servername:8080", applyAutoDetection("<auto>https://myhost", context.request()));
+  }
+
+  @Test
+  void testRequestUrlPlaceholder_URLHandler() {
+    UrlHandler urlHandler = AdaptTo.notNull(context.request(), UrlHandler.class);
+    assertEquals("http://servername:8080", urlHandler.applySiteUrlAutoDetection("<auto>https://myhost"));
   }
 
   @Test
