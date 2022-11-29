@@ -48,6 +48,7 @@ final class UrlBuilderImpl implements UrlBuilder {
   private Set<String> inheritableParameterNames;
   private String fragment;
   private UrlMode urlMode;
+  private boolean disableSuffixSelector;
 
   /**
    * @param path Path for URL (without any hostname, scheme, extension, suffix etc.)
@@ -126,9 +127,16 @@ final class UrlBuilderImpl implements UrlBuilder {
     return this;
   }
 
+
+  @Override
+  public @NotNull UrlBuilder disableSuffixSelector(boolean value) {
+    this.disableSuffixSelector = value;
+    return this;
+  }
+
   @Override
   public String build() {
-    String url = urlHandler.buildUrl(path, selectors, extension, suffix);
+    String url = urlHandler.buildUrl(path, selectors, extension, suffix, disableSuffixSelector);
     if (StringUtils.isNotEmpty(queryString) || inheritableParameterNames != null) {
       url = urlHandler.appendQueryString(url, queryString, inheritableParameterNames);
     }
