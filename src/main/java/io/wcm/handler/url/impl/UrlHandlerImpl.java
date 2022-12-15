@@ -224,7 +224,7 @@ public final class UrlHandlerImpl implements UrlHandler {
     return UrlPrefix.applyAutoDetection(configuredUrlPrefix, self);
   }
 
-  String buildUrl(String path, String selector, String extension, String suffix) { //NOPMD
+  String buildUrl(String path, String selector, String extension, String suffix, boolean disableSuffixSelector) { //NOPMD
     if (StringUtils.isBlank(path)) {
       return null;
     }
@@ -260,7 +260,9 @@ public final class UrlHandlerImpl implements UrlHandler {
       }
 
       // add a ".suffix" selector to avoid overlapping of filenames between suffixed and non-suffixed versions of the same page in the dispatcher cache
-      selectorPart.append('.').append(UrlHandler.SELECTOR_SUFFIX);
+      if (!disableSuffixSelector) {
+        selectorPart.append('.').append(UrlHandler.SELECTOR_SUFFIX);
+      }
     }
 
     // build externalized url

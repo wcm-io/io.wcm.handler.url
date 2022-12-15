@@ -92,6 +92,17 @@ public interface UrlBuilder {
   UrlBuilder urlMode(UrlMode urlMode);
 
   /**
+   * Disable the automatic addition of an additional selector {@link UrlHandler#SELECTOR_SUFFIX}
+   * in case a suffix is present for building the URL. Although recommended as best practice, this can
+   * be omitted if you are sure your URLs are always either include a suffix or never do, so there is no risk
+   * for file name clashes in dispatcher cache.
+   * @param disableSuffixSelector If set to true, no additional suffix selector is added
+   * @return URL builder
+   */
+  @NotNull
+  UrlBuilder disableSuffixSelector(boolean disableSuffixSelector);
+
+  /**
    * Build URL
    * @return URL
    */

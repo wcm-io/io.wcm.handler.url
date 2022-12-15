@@ -604,6 +604,18 @@ class UrlHandlerImplTest {
   }
 
   @Test
+  void testBuildUrl_disableSuffixSelector() {
+    UrlHandler urlHandler = AdaptTo.notNull(adaptable(), UrlHandler.class);
+
+    assertEquals("/the/path.ext/suffix1.ext",
+        urlHandler.get("/the/path").extension("ext").suffix("suffix1").disableSuffixSelector(true).build());
+    assertEquals("/the/path.selector.ext/suffix1.ext",
+        urlHandler.get("/the/path").selectors("selector").extension("ext").suffix("suffix1").disableSuffixSelector(true).build());
+    assertEquals("/the/path.selector.ext/suffix2.myext",
+        urlHandler.get("/the/path").selectors("selector").extension("ext").suffix("/suffix2.myext").disableSuffixSelector(true).build());
+  }
+
+  @Test
   void testUrlWithSpaces() {
     UrlHandler urlHandler = AdaptTo.notNull(adaptable(), UrlHandler.class);
 
