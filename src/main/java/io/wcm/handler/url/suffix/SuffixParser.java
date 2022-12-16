@@ -27,7 +27,9 @@ import static io.wcm.handler.url.suffix.impl.UrlSuffixUtil.splitSuffix;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -39,10 +41,7 @@ import org.osgi.annotation.versioning.ProviderType;
 
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.wcm.sling.commons.adapter.AdaptTo;
 
 /**
@@ -346,6 +345,7 @@ public final class SuffixParser {
    * @param basePage the suffix path is relative to this page path (null for current page)
    * @return a list containing the Pages
    */
+  @SuppressWarnings("null")
   public @NotNull List<Page> getPages(@Nullable final Predicate<Page> filter, @Nullable final Page basePage) {
     Resource baseResourceToUse = null;
 
@@ -378,14 +378,11 @@ public final class SuffixParser {
     List<Resource> resources = getResourcesWithBaseResource(resourceFilter, baseResourceToUse);
 
     // convert resources back to pages
-    return Lists.transform(resources, new Function<Resource, Page>() {
-      @Override
-      @SuppressWarnings("null")
-      @SuppressFBWarnings("NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE")
-      public Page apply(@Nullable Resource resource) {
-        return resource.adaptTo(Page.class);
-      }
-    });
+    return resources.stream()
+        .filter(Objects::nonNull)
+        .map(resource -> resource.adaptTo(Page.class))
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
   }
 
   private @NotNull List<Resource> getResourcesWithBaseResource(@Nullable Predicate<Resource> filter, @Nullable Resource baseResource) {

@@ -46,7 +46,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.day.cq.wcm.api.Page;
-import com.google.common.collect.ImmutableList;
 
 import io.wcm.handler.url.testcontext.AppAemContext;
 import io.wcm.sling.commons.resource.ImmutableValueMap;
@@ -343,7 +342,7 @@ class SuffixBuilderTest {
     Page targetPage1 = context.create().page("/content/a/b/c");
     Page targetPage2 = context.create().page("/content/a/d/1");
     Page targetPage3 = context.create().page("/content/a/d/2");
-    List<Page> targetPages = ImmutableList.of(targetPage1, targetPage2, targetPage3);
+    List<Page> targetPages = List.of(targetPage1, targetPage2, targetPage3);
 
     String suffix = getBuilder().pages(targetPages, basePage).build();
     // suffix should contain relative path without leading slash

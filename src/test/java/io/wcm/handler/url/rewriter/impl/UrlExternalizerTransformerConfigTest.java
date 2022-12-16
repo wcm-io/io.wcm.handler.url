@@ -26,8 +26,6 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.google.common.collect.ImmutableMap;
-
 import io.wcm.sling.commons.resource.ImmutableValueMap;
 
 class UrlExternalizerTransformerConfigTest {
@@ -49,11 +47,10 @@ class UrlExternalizerTransformerConfigTest {
 
   @Test
   void testGetElementAttributeNames() {
-    Map<String, String> expected = ImmutableMap.<String, String>builder()
-        .put("element1", "attr1")
-        .put("element2", "attr2")
-        .build();
-    assertEquals(expected, ImmutableMap.copyOf(underTest.getElementAttributeNames()));
+    Map<String, String> expected = Map.of(
+        "element1", "attr1",
+        "element2", "attr2");
+    assertEquals(expected, Map.copyOf(underTest.getElementAttributeNames()));
   }
 
 }

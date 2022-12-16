@@ -38,6 +38,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -46,8 +47,6 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 import com.day.cq.wcm.api.Page;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 
 import io.wcm.handler.url.suffix.impl.ExcludeNamedPartsFilter;
 import io.wcm.handler.url.suffix.impl.ExcludeResourcePartsFilter;
@@ -277,7 +276,9 @@ public final class SuffixBuilder {
    */
   @SuppressWarnings("null")
   public @NotNull SuffixBuilder pages(@NotNull List<Page> pages, @NotNull Page suffixBasePage) {
-    List<Resource> resources = Lists.transform(pages, page -> page.adaptTo(Resource.class));
+    List<Resource> resources = pages.stream()
+        .map(page -> page.adaptTo(Resource.class))
+        .collect(Collectors.toList());
     return resources(resources, AdaptTo.notNull(suffixBasePage, Resource.class));
   }
 
@@ -313,7 +314,7 @@ public final class SuffixBuilder {
 
     // copy the resources specified as parameters to the sorted set of paths
     if (resourcePaths != null) {
-      resourcePathsSet.addAll(ImmutableList.copyOf(resourcePaths));
+      resourcePathsSet.addAll(List.copyOf(resourcePaths));
     }
 
     // gather all suffix parts in this list
