@@ -7,7 +7,7 @@
 URL resolving and processing.
 
 Documentation: https://wcm.io/handler/url/<br/>
-Issues: https://wcm-io.atlassian.net/projects/WHAN<br/>
+Issues: https://github.com/wcm-io/io.wcm.handler.url/issues<br/>
 Wiki: https://wcm-io.atlassian.net/wiki/<br/>
 Continuous Integration: https://github.com/wcm-io/io.wcm.handler.url/actions<br/>
 Commercial support: https://wcm.io/commercial-support.html
