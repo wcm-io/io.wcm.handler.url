@@ -119,7 +119,7 @@
     <dependency>
       <groupId>io.wcm</groupId>
       <artifactId>io.wcm.testing.aem-mock.junit5</artifactId>
-      <version>5.1.2</version>
+      <version>5.2.0</version>
       <scope>test</scope>
       <exclusions>
         <!-- Exclude Sling XSS to avoid conflict with org.xml.sax packages exported -->
@@ -144,7 +144,7 @@
     <dependency>
       <groupId>io.wcm</groupId>
       <artifactId>io.wcm.testing.wcm-io-mock.sling</artifactId>
-      <version>1.1.0</version>
+      <version>1.2.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
