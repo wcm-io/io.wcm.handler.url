@@ -28,7 +28,7 @@
         Switch to Java 11 as minimum version.
       </action>
       <action type="update" dev="sseifert">
-        Reduce dependency to Guava.
+        Eliminate dependency to Guava.
       </action>
     </release>
 
