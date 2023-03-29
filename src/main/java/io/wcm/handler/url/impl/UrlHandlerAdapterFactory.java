@@ -20,7 +20,6 @@
 package io.wcm.handler.url.impl;
 
 import java.lang.annotation.Annotation;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
@@ -32,11 +31,9 @@ import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 import io.wcm.handler.url.SiteConfig;
 import io.wcm.handler.url.spi.UrlHandlerConfig;
@@ -59,10 +56,8 @@ public class UrlHandlerAdapterFactory implements AdapterFactory {
   @Reference
   private ConfigurationResourceResolver configurationResourceResolver;
 
-  private static final Logger log = LoggerFactory.getLogger(UrlHandlerAdapterFactory.class);
-
   // cache resolving of site root level per resource path
-  private final Cache<String, SiteConfig> siteConfigCache = CacheBuilder.newBuilder()
+  private final Cache<String, SiteConfig> siteConfigCache = Caffeine.newBuilder()
       .expireAfterWrite(5, TimeUnit.SECONDS)
       .maximumSize(10000)
       .build();
@@ -101,16 +96,10 @@ public class UrlHandlerAdapterFactory implements AdapterFactory {
     }
 
     // get site config for site root resource and cache the result (for a short time)
-    try {
-      return siteConfigCache.get(contextRootPath, () -> {
-        Resource siteRootResource = contextResource.getResourceResolver().getResource(contextRootPath);
-        return getSiteConfigForResourceCacheable(siteRootResource);
-      });
-    }
-    catch (ExecutionException ex) {
-      log.warn("Unexpected exception.", ex);
-      return null;
-    }
+    return siteConfigCache.get(contextRootPath, path -> {
+      Resource siteRootResource = contextResource.getResourceResolver().getResource(contextRootPath);
+      return getSiteConfigForResourceCacheable(siteRootResource);
+    });
   }
 
   /**

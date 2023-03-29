@@ -19,7 +19,6 @@
  */
 package io.wcm.handler.url.impl;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.sling.api.resource.Resource;
@@ -30,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 import io.wcm.handler.url.SiteRootDetector;
 import io.wcm.wcm.commons.util.Path;
@@ -50,7 +49,7 @@ public class SiteRootDetectorImpl implements SiteRootDetector {
   private static final Logger log = LoggerFactory.getLogger(SiteRootDetectorImpl.class);
 
   // cache resolving of site root level per resource path
-  private final Cache<String, Integer> cache = CacheBuilder.newBuilder()
+  private final Cache<String, Integer> cache = Caffeine.newBuilder()
       .expireAfterWrite(1, TimeUnit.MINUTES)
       .maximumSize(10000)
       .build();
@@ -60,13 +59,7 @@ public class SiteRootDetectorImpl implements SiteRootDetector {
     if (contextResource == null) {
       return INVALID_SITE_ROOT_LEVEL;
     }
-    try {
-      return cache.get(contextResource.getPath(), () -> detectSiteRootLevel(contextResource));
-    }
-    catch (ExecutionException ex) {
-      log.warn("Unexpected exception.", ex);
-      return INVALID_SITE_ROOT_LEVEL;
-    }
+    return cache.get(contextResource.getPath(), path -> detectSiteRootLevel(contextResource));
   }
 
   private int detectSiteRootLevel(@Nullable Resource contextResource) {

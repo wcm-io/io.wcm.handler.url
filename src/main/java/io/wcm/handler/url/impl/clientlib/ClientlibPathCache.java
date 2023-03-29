@@ -27,7 +27,6 @@ import static javax.jcr.observation.Event.PROPERTY_CHANGED;
 import static javax.jcr.observation.Event.PROPERTY_REMOVED;
 
 import java.util.Collections;
-import java.util.concurrent.ExecutionException;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -44,9 +43,8 @@ import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.LoadingCache;
 
 /**
  * Checks given path for client library folder and allowProxy flag status.
@@ -69,28 +67,25 @@ class ClientlibPathCache implements EventListener, AutoCloseable {
   private static final String SERVICE_USER_MAPPING_WARNING = "Missing service user mapping for "
       + "'io.wcm.handler.url:" + CLIENTLIBS_SERVICE + "' - see https://wcm.io/handler/url/configuration.html";
 
-  private final LoadingCache<String, ClientlibPathCacheEntry> cache = CacheBuilder.newBuilder()
+  private final LoadingCache<String, ClientlibPathCacheEntry> cache = Caffeine.newBuilder()
       .maximumSize(10000)
-      .build(new CacheLoader<String, ClientlibPathCacheEntry>() {
-        @Override
-        public ClientlibPathCacheEntry load(String path) throws Exception {
-          try (ResourceResolver resourceResolver = getServiceResourceResolver()) {
-            Resource resource = resourceResolver.getResource(path);
-            if (resource != null) {
-              Node node = resource.adaptTo(Node.class);
-              if (node != null && node.isNodeType(NT_CLIENTLIBRARY)) {
-                boolean isAllowProxy = resource.getValueMap().get(PN_ALLOWPROXY, false);
-                ClientlibPathCacheEntry entry = new ClientlibPathCacheEntry(path, true, isAllowProxy);
-                log.debug("Detected client library: {}", entry);
-                return entry;
-              }
+      .build(path -> {
+        try (ResourceResolver resourceResolver = getServiceResourceResolver()) {
+          Resource resource = resourceResolver.getResource(path);
+          if (resource != null) {
+            Node node = resource.adaptTo(Node.class);
+            if (node != null && node.isNodeType(NT_CLIENTLIBRARY)) {
+              boolean isAllowProxy = resource.getValueMap().get(PN_ALLOWPROXY, false);
+              ClientlibPathCacheEntry entry = new ClientlibPathCacheEntry(path, true, isAllowProxy);
+              log.debug("Detected client library: {}", entry);
+              return entry;
             }
           }
-          catch (LoginException ex) {
-            log.warn(SERVICE_USER_MAPPING_WARNING);
-          }
-          return new ClientlibPathCacheEntry(path, false, false);
         }
+        catch (LoginException ex) {
+          log.warn(SERVICE_USER_MAPPING_WARNING);
+        }
+        return new ClientlibPathCacheEntry(path, false, false);
       });
 
   private static final Logger log = LoggerFactory.getLogger(ClientlibPathCache.class);
@@ -149,14 +144,8 @@ class ClientlibPathCache implements EventListener, AutoCloseable {
    * @return true if it is a client library, and if it has set the "allowProxy" flag.
    */
   public boolean isClientlibWithAllowProxy(String path) {
-    try {
-      ClientlibPathCacheEntry entry = cache.get(path);
-      return entry.isClientLibrary() && entry.isAllowProxy();
-    }
-    catch (ExecutionException ex) {
-      log.warn("Error accessing cache.", ex);
-      return false;
-    }
+    ClientlibPathCacheEntry entry = cache.get(path);
+    return entry.isClientLibrary() && entry.isAllowProxy();
   }
 
   @Override
