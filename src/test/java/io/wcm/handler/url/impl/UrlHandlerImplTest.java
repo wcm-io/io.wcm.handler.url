@@ -50,7 +50,6 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import com.day.cq.wcm.api.Page;
-import com.google.common.collect.ImmutableSet;
 
 import io.wcm.handler.url.UrlHandler;
 import io.wcm.handler.url.UrlMode;
@@ -662,7 +661,7 @@ class UrlHandlerImplTest {
   void testAppendQueryStringWithInheritance() {
     UrlHandler urlHandler = AdaptTo.notNull(adaptable(), UrlHandler.class);
 
-    Set<String> params = ImmutableSet.of("i1", "i2");
+    Set<String> params = Set.of("i1", "i2");
 
     // test without request url params
     assertEquals("/the/path", appendQueryString(urlHandler, "/the/path", null, params));

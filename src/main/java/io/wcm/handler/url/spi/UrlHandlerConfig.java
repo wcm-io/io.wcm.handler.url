@@ -20,13 +20,13 @@
 package io.wcm.handler.url.spi;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.apache.sling.api.resource.Resource;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.day.cq.wcm.api.Page;
-import com.google.common.collect.ImmutableList;
 
 import io.wcm.handler.url.UrlMode;
 import io.wcm.handler.url.UrlModes;
@@ -80,7 +80,7 @@ public abstract class UrlHandlerConfig implements ContextAwareService {
    */
   public @NotNull Collection<IntegratorMode> getIntegratorModes() {
     // not supported by default
-    return ImmutableList.of();
+    return Collections.emptyList();
   }
 
   /**
