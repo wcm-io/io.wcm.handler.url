@@ -128,13 +128,6 @@
       <artifactId>io.wcm.testing.aem-mock.junit5</artifactId>
       <version>5.4.2</version>
       <scope>test</scope>
-      <exclusions>
-        <!-- Exclude Sling XSS to avoid conflict with org.xml.sax packages exported -->
-        <exclusion>
-          <groupId>org.apache.sling</groupId>
-          <artifactId>org.apache.sling.xss</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.sling</groupId>
