@@ -41,6 +41,7 @@ Read the [general concepts][general-concepts] to get an overview of the function
 
 |URL Handler version |AEM version supported
 |--------------------|----------------------
+|2.0.x or higher     |AEM 6.5.17+, AEMaaCS
 |1.7.2 or higher     |AEM 6.5.7+, AEMaaCS
 |1.7.0               |AEM 6.5+, AEMaaCS
 |1.5.x - 1.6.x       |AEM 6.4.5+, AEMaaCS
