@@ -24,6 +24,7 @@ import java.util.Collections;
 
 import org.apache.sling.api.resource.Resource;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.day.cq.wcm.api.Page;
@@ -46,7 +47,7 @@ public abstract class UrlHandlerConfig implements ContextAwareService {
    * @param contextResource Context resource that is assumed to be inside the site context.
    * @return Root level or -1 if it could not be detected
    */
-  public abstract int getSiteRootLevel(Resource contextResource);
+  public abstract int getSiteRootLevel(@Nullable Resource contextResource);
 
   /**
    * Detects if a page has to be accessed in secure mode
