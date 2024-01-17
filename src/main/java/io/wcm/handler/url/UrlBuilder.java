@@ -40,7 +40,7 @@ public interface UrlBuilder {
    * @return URL builder
    */
   @NotNull
-  UrlBuilder selectors(@NotNull String selectors);
+  UrlBuilder selectors(@Nullable String selectors);
 
   /**
    * Set file extension
@@ -48,7 +48,7 @@ public interface UrlBuilder {
    * @return URL builder
    */
   @NotNull
-  UrlBuilder extension(@NotNull String extension);
+  UrlBuilder extension(@Nullable String extension);
 
   /**
    * Set suffix
@@ -56,7 +56,7 @@ public interface UrlBuilder {
    * @return URL builder
    */
   @NotNull
-  UrlBuilder suffix(@NotNull String suffix);
+  UrlBuilder suffix(@Nullable String suffix);
 
   /**
    * Set query parameters string
@@ -64,7 +64,7 @@ public interface UrlBuilder {
    * @return URL builder
    */
   @NotNull
-  UrlBuilder queryString(@NotNull String queryString);
+  UrlBuilder queryString(@Nullable String queryString);
 
   /**
    * Set query parameters string
@@ -73,7 +73,7 @@ public interface UrlBuilder {
    * @return URL builder
    */
   @NotNull
-  UrlBuilder queryString(@NotNull String queryString, @NotNull Set<String> inheritableParameterNames);
+  UrlBuilder queryString(@Nullable String queryString, @NotNull Set<String> inheritableParameterNames);
 
   /**
    * Set fragment identifier
@@ -81,7 +81,7 @@ public interface UrlBuilder {
    * @return URL builder
    */
   @NotNull
-  UrlBuilder fragment(@NotNull String fragment);
+  UrlBuilder fragment(@Nullable String fragment);
 
   /**
    * Set URL mode for externalizing the URL
@@ -89,7 +89,7 @@ public interface UrlBuilder {
    * @return URL builder
    */
   @NotNull
-  UrlBuilder urlMode(@NotNull UrlMode urlMode);
+  UrlBuilder urlMode(@Nullable UrlMode urlMode);
 
   /**
    * Disable the automatic addition of an additional selector {@link UrlHandler#SELECTOR_SUFFIX}
