@@ -292,6 +292,7 @@ class UrlHandlerImplTest {
   }
 
   @Test
+  @SuppressWarnings("java:S5961") // number of asserts
   void testExternalizeLinkUrl() {
     // create current page in site context
     context.currentPage(context.create().page("/content/unittest/de_test/brand/de/section/page",
@@ -431,6 +432,7 @@ class UrlHandlerImplTest {
   }
 
   @Test
+  @SuppressWarnings("java:S5961") // number of asserts
   void testExternalizeResourceUrl() {
     // create current page in site context
     context.currentPage(context.create().page("/content/unittest/de_test/brand/de/section/page",
@@ -561,6 +563,7 @@ class UrlHandlerImplTest {
   }
 
   @Test
+  @SuppressWarnings("java:S5961") // number of asserts
   void testBuildUrl() {
     UrlHandler urlHandler = AdaptTo.notNull(adaptable(), UrlHandler.class);
 

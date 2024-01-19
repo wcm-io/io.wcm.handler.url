@@ -131,6 +131,7 @@ public class UrlHandlerAdapterFactory implements AdapterFactory {
     };
   }
 
+  @SuppressWarnings("java:S112") // allow runtime exception
   private SiteConfig getSiteConfigForResource(Resource contextResource) {
     ConfigurationBuilder configurationBuilder = contextResource.adaptTo(ConfigurationBuilder.class);
     if (configurationBuilder == null) {
