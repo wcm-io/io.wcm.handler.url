@@ -19,7 +19,6 @@
  */
 package io.wcm.handler.url.rewriter.impl;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
@@ -97,12 +96,7 @@ class UrlExternalizerTransformer extends AbstractSAXPipe implements Transformer 
     }
 
     // decode URL (without URL remainder)
-    try {
-      url = URLDecoder.decode(url, StandardCharsets.UTF_8.name());
-    }
-    catch (UnsupportedEncodingException ex) {
-      throw new RuntimeException("Unsupported encoding.", ex);
-    }
+    url = URLDecoder.decode(url, StandardCharsets.UTF_8);
 
     // externalize URL (if it is not already externalized)
     String rewrittenUrl = urlHandler.get(url).buildExternalResourceUrl();

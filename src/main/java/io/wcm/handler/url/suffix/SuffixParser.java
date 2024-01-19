@@ -62,16 +62,6 @@ public final class SuffixParser {
   }
 
   /**
-   * Create a {@link SuffixParser} that keeps only the suffix parts matched by the given filter when constructing
-   * a new suffix
-   * @param request Sling request
-   * @param suffixPartFilter the filter that is called for each suffix part
-   */
-  public SuffixParser(@NotNull SlingHttpServletRequest request, @NotNull Predicate<String> suffixPartFilter) {
-    this.request = request;
-  }
-
-  /**
    * Extract the value of a named suffix part from this request's suffix
    * @param key key of the suffix part
    * @param clazz Type expected for return value.
@@ -256,6 +246,7 @@ public final class SuffixParser {
    * @param baseResource the suffix path is relative to this resource path (null for current page's jcr:content node)
    * @return a list containing the Resources
    */
+  @SuppressWarnings("java:S112") // allow runtime exception
   public @NotNull List<Resource> getResources(@Nullable Predicate<Resource> filter, @Nullable Resource baseResource) {
 
     // resolve base path or fallback to current page's content if not specified
@@ -362,18 +353,15 @@ public final class SuffixParser {
     }
 
     // filter pages (as resources)
-    Predicate<Resource> resourceFilter = new Predicate<Resource>() {
-      @Override
-      public boolean test(Resource resource) {
-        Page page = resource.adaptTo(Page.class);
-        if (page == null) {
-          return false;
-        }
-        if (filter == null) {
-          return true;
-        }
-        return filter.test(page);
+    Predicate<Resource> resourceFilter = resource -> {
+      Page page = resource.adaptTo(Page.class);
+      if (page == null) {
+        return false;
       }
+      if (filter == null) {
+        return true;
+      }
+      return filter.test(page);
     };
     List<Resource> resources = getResourcesWithBaseResource(resourceFilter, baseResourceToUse);
 
@@ -385,6 +373,7 @@ public final class SuffixParser {
         .collect(Collectors.toList());
   }
 
+  @SuppressWarnings("java:S135") // allow multiple continues
   private @NotNull List<Resource> getResourcesWithBaseResource(@Nullable Predicate<Resource> filter, @Nullable Resource baseResource) {
     // split the suffix to extract the paths of the selected components
     String[] suffixParts = splitSuffix(request.getRequestPathInfo().getSuffix());

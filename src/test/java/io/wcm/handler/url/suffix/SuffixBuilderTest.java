@@ -31,7 +31,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -98,12 +97,7 @@ class SuffixBuilderTest {
   private void setContextAttributes(final String urlEncodedSuffix, Page currentPage) {
     String decodedSuffix = null;
     if (urlEncodedSuffix != null) {
-      try {
-        decodedSuffix = URLDecoder.decode(urlEncodedSuffix, StandardCharsets.UTF_8.name());
-      }
-      catch (UnsupportedEncodingException ex) {
-        throw new RuntimeException("Unsupported encoding.", ex);
-      }
+      decodedSuffix = URLDecoder.decode(urlEncodedSuffix, StandardCharsets.UTF_8);
     }
     context.requestPathInfo().setSuffix(decodedSuffix);
 
@@ -194,6 +188,7 @@ class SuffixBuilderTest {
   }
 
   @Test
+  @SuppressWarnings("java:S5778")
   void testValueInvalidType() {
     assertThrows(IllegalArgumentException.class, () -> {
       String key = "abc";
@@ -211,6 +206,7 @@ class SuffixBuilderTest {
   }
 
   @Test
+  @SuppressWarnings("java:S5778")
   void testNullKey() {
     assertThrows(IllegalArgumentException.class, () -> {
       String key = null;
@@ -324,6 +320,7 @@ class SuffixBuilderTest {
   }
 
   @Test
+  @SuppressWarnings("java:S5778")
   void testPageWithInvalidBasePage() {
     assertThrows(IllegalArgumentException.class, () -> {
       context.create().page("/content/a", "template", "title");

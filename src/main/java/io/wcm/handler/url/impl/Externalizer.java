@@ -68,6 +68,7 @@ final class Externalizer {
     return externalizeUrlWithSlingMapping(url, resolver, request, true);
   }
 
+  @SuppressWarnings("java:S112") // allow runtime exception
   private static @Nullable String externalizeUrlWithSlingMapping(@NotNull String url, @NotNull ResourceResolver resolver,
       @Nullable SlingHttpServletRequest request, boolean keepHost) {
 
