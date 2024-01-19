@@ -216,6 +216,7 @@ class SuffixBuilderTest {
   }
 
   @Test
+  @SuppressWarnings("java:S5778")
   void testPageResourceResource() {
     // construct suffix pointing to a resource
     Page page = context.create().page("/content/a", "template", "title");
