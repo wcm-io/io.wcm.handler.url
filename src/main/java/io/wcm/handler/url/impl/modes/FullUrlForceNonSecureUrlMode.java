@@ -36,6 +36,7 @@ import io.wcm.wcm.commons.util.RunMode;
 /**
  * Enforce the generation of a full URL with protocol and hostname and non-secure mode.
  */
+@SuppressWarnings("java:S2160") // equals is implemented via AbstractUrlMode
 public final class FullUrlForceNonSecureUrlMode extends AbstractUrlMode {
 
   private final boolean forcePublish;

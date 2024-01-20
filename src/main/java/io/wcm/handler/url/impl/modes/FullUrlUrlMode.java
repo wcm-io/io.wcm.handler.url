@@ -39,6 +39,7 @@ import io.wcm.wcm.commons.util.RunMode;
  * If the target is an internal content page, siteUrl or siteUrlSecure is chosen automatically depending on the secure
  * state of page.
  */
+@SuppressWarnings("java:S2160") // equals is implemented via AbstractUrlMode
 public final class FullUrlUrlMode extends AbstractUrlMode {
 
   private final boolean forcePublish;
