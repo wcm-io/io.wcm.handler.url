@@ -165,7 +165,7 @@ final class Externalizer {
    * - everything starting with // or # is handles as exteranlized
    * - all other strings handles as not externalized
    */
-  private static final Pattern EXTERNALIZED_PATTERN = Pattern.compile("^([^/]+:|//|#).*$");
+  private static final Pattern EXTERNALIZED_PATTERN = Pattern.compile("^([^/]+:|//|#).+?");
 
   /**
    * Checks if the given URL is already externalized.
