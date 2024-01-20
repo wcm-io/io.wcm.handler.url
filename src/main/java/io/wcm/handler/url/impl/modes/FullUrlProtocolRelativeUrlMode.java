@@ -40,6 +40,7 @@ import io.wcm.wcm.commons.util.RunMode;
  * Using "//" instead of "http://" or "https://" results in using the same protocol as the current request
  * in the browser.
  */
+@SuppressWarnings("java:S2160") // equals is implemented via AbstractUrlMode
 public final class FullUrlProtocolRelativeUrlMode extends AbstractUrlMode {
 
   private final boolean forcePublish;
