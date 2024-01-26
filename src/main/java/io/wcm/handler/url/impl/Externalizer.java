@@ -68,6 +68,7 @@ final class Externalizer {
     return externalizeUrlWithSlingMapping(url, resolver, request, true);
   }
 
+  @SuppressWarnings("java:S112") // allow runtime exception
   private static @Nullable String externalizeUrlWithSlingMapping(@NotNull String url, @NotNull ResourceResolver resolver,
       @Nullable SlingHttpServletRequest request, boolean keepHost) {
 
@@ -164,7 +165,7 @@ final class Externalizer {
    * - everything starting with // or # is handles as exteranlized
    * - all other strings handles as not externalized
    */
-  private static final Pattern EXTERNALIZED_PATTERN = Pattern.compile("^([^/]+:|//|#).*$");
+  private static final Pattern EXTERNALIZED_PATTERN = Pattern.compile("^([^/]+:|//|#).+?");
 
   /**
    * Checks if the given URL is already externalized.

@@ -286,6 +286,7 @@ public final class SuffixBuilder {
    * Build complete suffix.
    * @return the suffix
    */
+  @SuppressWarnings("java:S2692") // 0 index skipped by intention
   public @NotNull String build() {
     SortedMap<String, Object> sortedParameterMap = new TreeMap<>(parameterMap);
 

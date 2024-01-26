@@ -43,6 +43,7 @@ public class ClientlibProxyRewriterImpl implements ClientlibProxyRewriter {
   @Reference
   private ResourceResolverFactory resourceResolverFactory;
 
+  @SuppressWarnings("java:S3077") // volatile is ok here
   private volatile ClientlibPathCache clientlibPathCache;
 
   @Deactivate

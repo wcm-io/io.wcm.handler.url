@@ -20,6 +20,7 @@
 package io.wcm.handler.url.impl;
 
 import org.apache.sling.api.resource.Resource;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,7 +42,7 @@ public class DefaultUrlHandlerConfig extends UrlHandlerConfig {
   private SiteRootDetector siteRootDetector;
 
   @Override
-  public int getSiteRootLevel(Resource contextResource) {
+  public int getSiteRootLevel(@Nullable Resource contextResource) {
     // default to detection via SiteRootDetector
     return siteRootDetector.getSiteRootLevel(contextResource);
   }

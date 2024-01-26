@@ -84,45 +84,45 @@ final class UrlBuilderImpl implements UrlBuilder {
   }
 
   @Override
-  public @NotNull UrlBuilder selectors(String value) {
+  public @NotNull UrlBuilder selectors(@Nullable String value) {
     this.selectors = value;
     return this;
   }
 
   @Override
-  public @NotNull UrlBuilder extension(String value) {
+  public @NotNull UrlBuilder extension(@Nullable String value) {
     this.extension = value;
     return this;
   }
 
   @Override
-  public @NotNull UrlBuilder suffix(String value) {
+  public @NotNull UrlBuilder suffix(@Nullable String value) {
     this.suffix = value;
     return this;
   }
 
   @Override
-  public @NotNull UrlBuilder queryString(String value) {
+  public @NotNull UrlBuilder queryString(@Nullable String value) {
     this.queryString = value;
     this.inheritableParameterNames = null;
     return this;
   }
 
   @Override
-  public @NotNull UrlBuilder queryString(String value, Set<String> inheritableParamNames) {
+  public @NotNull UrlBuilder queryString(@Nullable String value, @NotNull Set<String> inheritableParamNames) {
     this.queryString = value;
     this.inheritableParameterNames = inheritableParamNames;
     return this;
   }
 
   @Override
-  public @NotNull UrlBuilder fragment(String value) {
+  public @NotNull UrlBuilder fragment(@Nullable String value) {
     this.fragment = value;
     return this;
   }
 
   @Override
-  public @NotNull UrlBuilder urlMode(UrlMode value) {
+  public @NotNull UrlBuilder urlMode(@Nullable UrlMode value) {
     this.urlMode = value;
     return this;
   }

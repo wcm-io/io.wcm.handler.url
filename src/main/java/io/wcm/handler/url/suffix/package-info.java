@@ -20,5 +20,5 @@
 /**
  * URL Suffix Helper.
  */
-@org.osgi.annotation.versioning.Version("1.0.1")
+@org.osgi.annotation.versioning.Version("2.0.0")
 package io.wcm.handler.url.suffix;
