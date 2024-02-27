@@ -92,6 +92,14 @@ public interface UrlBuilder {
   UrlBuilder urlMode(@Nullable UrlMode urlMode);
 
   /**
+   * Set Vanity mode for building the URL
+   * @param vanityMode Vanity Mode. Only used when building for a page
+   * @return URL builder
+   */
+  @NotNull
+  UrlBuilder vanityMode(@Nullable VanityMode vanityMode);
+
+  /**
    * Disable the automatic addition of an additional selector {@link UrlHandler#SELECTOR_SUFFIX}
    * in case a suffix is present for building the URL. Although recommended as best practice, this can
    * be omitted if you are sure your URLs are always either include a suffix or never do, so there is no risk

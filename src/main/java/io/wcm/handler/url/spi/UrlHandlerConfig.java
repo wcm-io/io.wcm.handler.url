@@ -22,6 +22,7 @@ package io.wcm.handler.url.spi;
 import java.util.Collection;
 import java.util.Collections;
 
+import io.wcm.handler.url.VanityMode;
 import org.apache.sling.api.resource.Resource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -93,6 +94,15 @@ public abstract class UrlHandlerConfig implements ContextAwareService {
    */
   public boolean isHostProvidedBySlingMapping() {
     return false;
+  }
+
+  /**
+   * By default, vanity paths will not be taken into account when building URLs.
+   * Use the vanity mode to change this behaviour
+   * @return the vanity mode to use when building urls
+   */
+  public VanityMode getDefaultVanityMode() {
+        return VanityMode.NEVER;
   }
 
 }

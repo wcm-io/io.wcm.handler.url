@@ -33,8 +33,10 @@ import static org.mockito.Mockito.when;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.Set;
 
+import io.wcm.handler.url.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.adapter.Adaptable;
@@ -51,9 +53,6 @@ import org.mockito.stubbing.Answer;
 
 import com.day.cq.wcm.api.Page;
 
-import io.wcm.handler.url.UrlHandler;
-import io.wcm.handler.url.UrlMode;
-import io.wcm.handler.url.UrlModes;
 import io.wcm.handler.url.integrator.IntegratorPlaceholder;
 import io.wcm.handler.url.spi.UrlHandlerConfig;
 import io.wcm.handler.url.testcontext.AppAemContext;
@@ -849,6 +848,70 @@ class UrlHandlerImplTest {
     // the full range of possible options of external/no-external URLs is tested in ExternalizerTest
     assertTrue(urlHandler.isExternalized("http://myhost/content/page1.html"));
     assertFalse(urlHandler.isExternalized("/content/page1.html"));
+  }
+
+  @Test
+  void testVanityModeAlwaysThroughConfig() {
+    // create current page in site context
+    String vanityPath = "/content/unittest/de_test/brand/de/vanity-path";
+    Page page = context.currentPage(context.create().page("/content/unittest/de_test/brand/de/section/original-page",
+            DummyAppTemplate.CONTENT.getTemplatePath(), Map.of("sling:vanityPath", vanityPath)));
+
+    UrlHandler urlHandler = AdaptTo.notNull(adaptable(), UrlHandler.class);
+    ((DummyUrlHandlerConfig)context.getService(UrlHandlerConfig.class)).setVanityMode(VanityMode.ALWAYS);
+
+    UrlBuilder urlBuilder = urlHandler.get(page)
+            .extension("html");
+    assertEquals("/content/unittest/de_test/brand/de/vanity-path.html", urlBuilder.build());
+    assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/vanity-path.html", urlBuilder.buildExternalLinkUrl());
+  }
+
+  @Test
+  void testVanityModeAlwaysThroughBuildOption() {
+    // create current page in site context
+    String vanityPath = "/content/unittest/de_test/brand/de/vanity-path";
+    Page page = context.currentPage(context.create().page("/content/unittest/de_test/brand/de/section/original-page",
+            DummyAppTemplate.CONTENT.getTemplatePath(), Map.of("sling:vanityPath", vanityPath)));
+
+    UrlHandler urlHandler = AdaptTo.notNull(adaptable(), UrlHandler.class);
+    UrlBuilder urlBuilder = urlHandler.get(page)
+            .extension("html")
+            .vanityMode(VanityMode.ALWAYS);
+    assertEquals("/content/unittest/de_test/brand/de/vanity-path.html", urlBuilder.build());
+    assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/vanity-path.html",urlBuilder.buildExternalLinkUrl());
+
+  }
+
+  @Test
+  void testVanityModeExternalizeThroughConfig() {
+    // create current page in site context
+    String vanityPath = "/content/unittest/de_test/brand/de/vanity-path";
+    Page page = context.currentPage(context.create().page("/content/unittest/de_test/brand/de/section/original-page",
+            DummyAppTemplate.CONTENT.getTemplatePath(), Map.of("sling:vanityPath", vanityPath)));
+
+    UrlHandler urlHandler = AdaptTo.notNull(adaptable(), UrlHandler.class);
+    ((DummyUrlHandlerConfig)context.getService(UrlHandlerConfig.class)).setVanityMode(VanityMode.EXTERNALIZE);
+
+    UrlBuilder urlBuilder = urlHandler.get(page)
+            .extension("html");
+    assertEquals("/content/unittest/de_test/brand/de/section/original-page.html",urlBuilder.build());
+    assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/vanity-path.html",urlBuilder.buildExternalLinkUrl());
+  }
+
+  @Test
+  void testVanityModeExternalizeThroughBuildOption() {
+    // create current page in site context
+    String vanityPath = "/content/unittest/de_test/brand/de/vanity-path";
+    Page page = context.currentPage(context.create().page("/content/unittest/de_test/brand/de/section/original-page",
+            DummyAppTemplate.CONTENT.getTemplatePath(), Map.of("sling:vanityPath", vanityPath)));
+
+    UrlHandler urlHandler = AdaptTo.notNull(adaptable(), UrlHandler.class);
+
+    UrlBuilder urlBuilder = urlHandler.get(page)
+            .vanityMode(VanityMode.EXTERNALIZE)
+            .extension("html");
+    assertEquals("/content/unittest/de_test/brand/de/section/original-page.html",urlBuilder.build());
+    assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/vanity-path.html",urlBuilder.buildExternalLinkUrl());
   }
 
 }

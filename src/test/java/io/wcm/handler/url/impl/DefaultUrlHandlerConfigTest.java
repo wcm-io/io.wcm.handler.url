@@ -22,6 +22,7 @@ package io.wcm.handler.url.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import io.wcm.handler.url.VanityMode;
 import org.apache.sling.api.resource.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,6 +59,11 @@ class DefaultUrlHandlerConfigTest {
     Resource resource = context.create().resource("/content/test1");
     when(siteRootDetector.getSiteRootLevel(resource)).thenReturn(ROOT_LEVEL);
     assertEquals(ROOT_LEVEL, underTest.getSiteRootLevel(resource));
+  }
+
+  @Test
+  void testDefaultVanityMode() {
+    assertEquals(VanityMode.NEVER, underTest.getDefaultVanityMode());
   }
 
 }

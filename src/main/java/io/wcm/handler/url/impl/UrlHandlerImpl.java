@@ -21,6 +21,7 @@ package io.wcm.handler.url.impl;
 
 import java.util.Set;
 
+import io.wcm.handler.url.VanityMode;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -353,6 +354,10 @@ public final class UrlHandlerImpl implements UrlHandler {
   @Override
   public String applySiteUrlAutoDetection(@Nullable String siteUrl) {
     return UrlPrefix.applyAutoDetection(siteUrl, self);
+  }
+
+  VanityMode getDefaultVanityMode() {
+    return urlHandlerConfig.getDefaultVanityMode();
   }
 
 }
