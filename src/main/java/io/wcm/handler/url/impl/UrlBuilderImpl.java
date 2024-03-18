@@ -21,6 +21,7 @@ package io.wcm.handler.url.impl;
 
 import java.util.Set;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +31,7 @@ import com.day.cq.wcm.api.Page;
 
 import io.wcm.handler.url.UrlBuilder;
 import io.wcm.handler.url.UrlMode;
+import io.wcm.handler.url.VanityMode;
 
 /**
  * Default implementation or {@link UrlBuilder}.
@@ -48,6 +50,7 @@ final class UrlBuilderImpl implements UrlBuilder {
   private Set<String> inheritableParameterNames;
   private String fragment;
   private UrlMode urlMode;
+  private VanityMode vanityMode;
   private boolean disableSuffixSelector;
 
   /**
@@ -127,6 +130,12 @@ final class UrlBuilderImpl implements UrlBuilder {
     return this;
   }
 
+  @Override
+  public @NotNull UrlBuilder vanityMode(@Nullable VanityMode value) {
+    this.vanityMode = value;
+    return this;
+  }
+
 
   @Override
   public @NotNull UrlBuilder disableSuffixSelector(boolean value) {
@@ -134,9 +143,14 @@ final class UrlBuilderImpl implements UrlBuilder {
     return this;
   }
 
-  @Override
-  public String build() {
-    String url = urlHandler.buildUrl(path, selectors, extension, suffix, disableSuffixSelector);
+  private String build(boolean externalize) {
+    String pathToUse = path;
+    VanityMode vanityModeToUse = ObjectUtils.defaultIfNull(vanityMode, urlHandler.getDefaultVanityMode());
+    if (page != null && (vanityModeToUse == VanityMode.ALWAYS || (externalize && vanityModeToUse == VanityMode.EXTERNALIZE))) {
+      pathToUse = StringUtils.defaultString(page.getVanityUrl(), path);
+    }
+
+    String url = urlHandler.buildUrl(pathToUse, selectors, extension, suffix, disableSuffixSelector);
     if (StringUtils.isNotEmpty(queryString) || inheritableParameterNames != null) {
       url = urlHandler.appendQueryString(url, queryString, inheritableParameterNames);
     }
@@ -144,6 +158,11 @@ final class UrlBuilderImpl implements UrlBuilder {
       url = urlHandler.setFragment(url, fragment);
     }
     return url;
+  }
+
+  @Override
+  public String build() {
+    return build(false);
   }
 
   @Override
@@ -160,7 +179,7 @@ final class UrlBuilderImpl implements UrlBuilder {
     if (targetPageToUse == null && resource != null) {
       targetPageToUse = resource.adaptTo(Page.class);
     }
-    String url = build();
+    String url = build(true);
     return urlHandler.externalizeLinkUrl(url, targetPageToUse, urlMode);
   }
 
@@ -178,7 +197,7 @@ final class UrlBuilderImpl implements UrlBuilder {
     if (targetResourceToUse == null && page != null) {
       targetResourceToUse = page.adaptTo(Resource.class);
     }
-    String url = build();
+    String url = build(true);
     return urlHandler.externalizeResourceUrl(url, targetResourceToUse, urlMode);
   }
 

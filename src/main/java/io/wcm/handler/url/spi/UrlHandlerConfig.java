@@ -31,6 +31,7 @@ import com.day.cq.wcm.api.Page;
 
 import io.wcm.handler.url.UrlMode;
 import io.wcm.handler.url.UrlModes;
+import io.wcm.handler.url.VanityMode;
 import io.wcm.handler.url.integrator.IntegratorMode;
 import io.wcm.sling.commons.caservice.ContextAwareService;
 
@@ -93,6 +94,15 @@ public abstract class UrlHandlerConfig implements ContextAwareService {
    */
   public boolean isHostProvidedBySlingMapping() {
     return false;
+  }
+
+  /**
+   * By default, vanity paths will not be taken into account when building URLs.
+   * Use the vanity mode to change this behaviour.
+   * @return the vanity mode to use when building urls
+   */
+  public VanityMode getDefaultVanityMode() {
+    return VanityMode.NEVER;
   }
 
 }
