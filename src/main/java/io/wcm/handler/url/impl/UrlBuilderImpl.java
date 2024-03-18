@@ -21,7 +21,6 @@ package io.wcm.handler.url.impl;
 
 import java.util.Set;
 
-import io.wcm.handler.url.VanityMode;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
@@ -32,6 +31,7 @@ import com.day.cq.wcm.api.Page;
 
 import io.wcm.handler.url.UrlBuilder;
 import io.wcm.handler.url.UrlMode;
+import io.wcm.handler.url.VanityMode;
 
 /**
  * Default implementation or {@link UrlBuilder}.
@@ -143,7 +143,7 @@ final class UrlBuilderImpl implements UrlBuilder {
     return this;
   }
 
-  public String build(boolean externalize) {
+  private String build(boolean externalize) {
     String pathToUse = path;
     VanityMode vanityModeToUse = ObjectUtils.defaultIfNull(vanityMode, urlHandler.getDefaultVanityMode());
     if (page != null && (vanityModeToUse == VanityMode.ALWAYS || (externalize && vanityModeToUse == VanityMode.EXTERNALIZE))) {

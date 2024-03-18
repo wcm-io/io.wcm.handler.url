@@ -20,22 +20,22 @@
 package io.wcm.handler.url;
 
 /**
- * Vanity mode to use when building URLs
+ * Vanity mode to use when building URLs pointing to AEM pages.
  */
 public enum VanityMode {
 
   /**
-   * Never take vanity paths into account
+   * Ignore vanity paths for AEM pages.
    */
   NEVER,
 
   /**
-   * Only use vanity paths when externalizing URLs
+   * Only use vanity paths when externalizing URLs for AEM pages.
    */
   EXTERNALIZE,
 
   /**
-   * Always use vanity paths
+   * Always use vanity paths for AEM pages.
    */
   ALWAYS
 
