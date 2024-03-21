@@ -21,6 +21,7 @@ package io.wcm.handler.url.testcontext;
 
 import java.util.List;
 
+import io.wcm.handler.url.VanityMode;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 
@@ -44,6 +45,7 @@ public class DummyUrlHandlerConfig extends UrlHandlerConfig {
       IntegratorModes.EXTENDED);
 
   private boolean hostProvidedBySlingMapping;
+  private VanityMode vanityMode;
 
   @Override
   public List<IntegratorMode> getIntegratorModes() {
@@ -76,4 +78,12 @@ public class DummyUrlHandlerConfig extends UrlHandlerConfig {
     this.hostProvidedBySlingMapping = hostProvidedBySlingMapping;
   }
 
+  public void setVanityMode(VanityMode vanityMode) {
+    this.vanityMode = vanityMode;
+  }
+
+  @Override
+  public VanityMode getDefaultVanityMode() {
+    return vanityMode;
+  }
 }

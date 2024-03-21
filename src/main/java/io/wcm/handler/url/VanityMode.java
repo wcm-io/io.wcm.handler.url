@@ -2,7 +2,7 @@
  * #%L
  * wcm.io
  * %%
- * Copyright (C) 2014 wcm.io
+ * Copyright (C) 2024 wcm.io
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,26 @@
  * limitations under the License.
  * #L%
  */
+package io.wcm.handler.url;
+
 /**
- * SPI for configuring and tailoring URL handler processing.
+ * Vanity mode to use when building URLs pointing to AEM pages.
  */
-@org.osgi.annotation.versioning.Version("1.2.0")
-package io.wcm.handler.url.spi;
+public enum VanityMode {
+
+  /**
+   * Ignore vanity paths for AEM pages.
+   */
+  NEVER,
+
+  /**
+   * Only use vanity paths when externalizing URLs for AEM pages.
+   */
+  EXTERNALIZE,
+
+  /**
+   * Always use vanity paths for AEM pages.
+   */
+  ALWAYS
+
+}

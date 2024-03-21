@@ -41,6 +41,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.wcm.handler.url.UrlBuilder;
 import io.wcm.handler.url.UrlHandler;
 import io.wcm.handler.url.UrlMode;
+import io.wcm.handler.url.VanityMode;
 import io.wcm.handler.url.impl.clientlib.ClientlibProxyRewriter;
 import io.wcm.handler.url.spi.UrlHandlerConfig;
 import io.wcm.sling.commons.request.RequestParam;
@@ -353,6 +354,10 @@ public final class UrlHandlerImpl implements UrlHandler {
   @Override
   public String applySiteUrlAutoDetection(@Nullable String siteUrl) {
     return UrlPrefix.applyAutoDetection(siteUrl, self);
+  }
+
+  VanityMode getDefaultVanityMode() {
+    return urlHandlerConfig.getDefaultVanityMode();
   }
 
 }
