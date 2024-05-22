@@ -5,7 +5,7 @@
 
 This is a customized Path Field that always sets the root path to the the "site root" of the current site. That is usually the root page of the current site root. The site root is configured in the URL handler configuration, see [usage][usage].
 
-```json
+```json-jcr
 "field": {
   "sling:resourceType": "wcm-io/handler/url/components/granite/form/siteRootPathField",
   "name": "./field",
@@ -25,7 +25,7 @@ _Please note: It is recommended to use the Path Field instead, because the Path 
 
 This is a customized Path Browser that always sets the root path to the the "site root" of the current site. That is usually the root page of the current site root. The site root is configured in the URL handler configuration, see [usage][usage].
 
-```json
+```json-jcr
 "field": {
   "sling:resourceType": "wcm-io/handler/url/components/granite/form/siteRootPathBrowser",
   "name": "./field",

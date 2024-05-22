@@ -16,7 +16,7 @@ To enable the `wcm-io-urlhandler-externalizer` you have to define your own rewri
 
 Example:
 
-```json
+```json-jcr
 {
   "jcr:primaryType": "nt:unstructured",
   "enabled": true,
@@ -46,7 +46,7 @@ Additional remarks:
 
 * You can set define an additional property to apply the configuration only to certain resource types or resource super types. Example:
 
-```json
+```json-jcr
 "resourceTypes": [
   "/apps/myApp/base/components/global/page"
 ]
