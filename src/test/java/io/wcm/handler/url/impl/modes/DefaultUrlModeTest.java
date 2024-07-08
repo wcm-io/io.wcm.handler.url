@@ -29,7 +29,6 @@ import io.wcm.handler.url.UrlModes;
 import io.wcm.handler.url.integrator.IntegratorHandler;
 import io.wcm.handler.url.integrator.IntegratorPlaceholder;
 import io.wcm.testing.mock.wcmio.wcm.MockInstanceType;
-import io.wcm.wcm.commons.util.RunMode;
 
 class DefaultUrlModeTest extends AbstractUrlModeTest {
 

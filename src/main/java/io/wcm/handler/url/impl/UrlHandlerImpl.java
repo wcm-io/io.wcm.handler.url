@@ -262,7 +262,7 @@ public final class UrlHandlerImpl implements UrlHandler {
 
       // add a ".suffix" selector to avoid overlapping of filenames between suffixed and non-suffixed versions of the same page in the dispatcher cache
       if (!disableSuffixSelector) {
-        selectorPart.append('.').append(UrlHandler.SELECTOR_SUFFIX);
+        selectorPart.append('.').append(SELECTOR_SUFFIX);
       }
     }
 
@@ -307,9 +307,9 @@ public final class UrlHandlerImpl implements UrlHandler {
                 if (queryParams.length() > 0) {
                   queryParams.append('&');
                 }
-                queryParams.append(parameterName);
-                queryParams.append('=');
-                queryParams.append(value);
+                queryParams.append(parameterName)
+                    .append('=')
+                    .append(value);
               }
             }
           }
@@ -319,8 +319,7 @@ public final class UrlHandlerImpl implements UrlHandler {
 
     // build complete url
     if (queryParams.length() > 0) {
-      urlBuilder.append('?');
-      urlBuilder.append(queryParams);
+      urlBuilder.append('?').append(queryParams);
     }
     return urlBuilder.toString();
   }

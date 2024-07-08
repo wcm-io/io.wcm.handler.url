@@ -236,7 +236,7 @@ class SuffixBuilderTest {
 
     // construct suffix for a null resource
     try {
-      suffix = getBuilder().resource(null, baseResource).build();
+      getBuilder().resource(null, baseResource).build();
       fail("expected IllegalArgumentException");
     }
     catch (IllegalArgumentException e) {
@@ -245,7 +245,7 @@ class SuffixBuilderTest {
 
     // construct suffix for a null base resource
     try {
-      suffix = getBuilder().resource(targetResource, null).build();
+      getBuilder().resource(targetResource, null).build();
       fail("expected IllegalArgumentException");
     }
     catch (IllegalArgumentException e) {
@@ -255,7 +255,7 @@ class SuffixBuilderTest {
     // construct suffix with an invalid base resource
     try {
       baseResource = createResource("/content/b");
-      suffix = getBuilder().resource(baseResource, null).build();
+      getBuilder().resource(baseResource, null).build();
       fail("expected IllegalArgumentException");
     }
     catch (IllegalArgumentException e) {

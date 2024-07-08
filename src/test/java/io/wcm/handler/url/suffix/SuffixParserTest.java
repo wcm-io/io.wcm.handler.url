@@ -346,7 +346,7 @@ class SuffixParserTest {
     Page basePage = context.create().page("/content/a", "template", "title");
     Resource targetResource = createResource("/content/a/jcr:content/b/c", resourceType);
 
-    // filter that only includes resources named "c";
+    // filter that only includes resources named "c"
     Predicate<Resource> cFilter = new Predicate<Resource>() {
       @Override
       public boolean test(Resource pResource) {
@@ -387,7 +387,7 @@ class SuffixParserTest {
     Resource resourceCC = createResource(basePath + "/c/c", resourceType);
     Resource resourceCD = createResource(basePath + "/c/d", resourceType);
 
-    // filter that only includes resources named "c";
+    // filter that only includes resources named "c"
     Predicate<Resource> cFilter = new Predicate<Resource>() {
       @Override
       public boolean test(Resource pResource) {
