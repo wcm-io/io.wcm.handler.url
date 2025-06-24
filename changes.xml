@@ -24,6 +24,12 @@
     xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 https://maven.apache.org/xsd/changes-2.0.0.xsd">
   <body>
 
+    <release version="2.1.1" date="not released">
+      <action type="update" dev="sseifert" issue="18">
+        global.jsp: Get rid of deprecated Granite XSS API.
+      </action>
+    </release>
+
     <release version="2.1.0" date="2024-03-21">
       <action type="add" dev="royteeuwen" issue="10">
         Add optional support for using vanity paths when building URLs to AEM pages.
