@@ -193,9 +193,11 @@ final class Externalizer {
 
   /**
    * Mangle the namespaces in the given path for usage in sling-based URLs.
+   *
    * <p>
    * Example: /path/jcr:content to /path/_jcr_content
    * </p>
+   *
    * @param path Path to mangle
    * @return Mangled path
    */
