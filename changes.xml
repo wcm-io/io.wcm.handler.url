@@ -25,6 +25,9 @@
   <body>
 
     <release version="2.1.1" date="not released">
+      <action type="update" dev="sseifert" issue="20">
+        Eliminate usage of Cocoon XML (deprecated API).
+      </action>
       <action type="update" dev="sseifert" issue="18">
         global.jsp: Get rid of deprecated Granite XSS API.
       </action>
