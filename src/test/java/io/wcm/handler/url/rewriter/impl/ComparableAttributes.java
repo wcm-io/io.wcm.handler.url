@@ -19,9 +19,9 @@
  */
 package io.wcm.handler.url.rewriter.impl;
 
-import org.apache.cocoon.xml.sax.AttributesImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.Attributes;
+import org.xml.sax.helpers.AttributesImpl;
 
 class ComparableAttributes extends AttributesImpl {
 
