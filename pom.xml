@@ -94,6 +94,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-xml</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.apache.sling</groupId>
       <artifactId>org.apache.sling.testing.hamcrest</artifactId>
       <scope>test</scope>
@@ -197,6 +203,8 @@
               javax.annotation;version="[0.0,2)",\
               <!-- Caffeine is embedded -->\
               !com.github.benmanes.caffeine.*, \
+              <!-- Cocoon XML is embedded -->\
+              !org.apache.cocoon.xml.*,\
               *
           </bnd>
         </configuration>
@@ -223,6 +231,7 @@
           <artifactSet>
             <includes>
               <include>com.github.ben-manes.caffeine:caffeine</include>
+              <include>org.apache.cocoon:cocoon-xml</include>
             </includes>
           </artifactSet>
           <relocations>
@@ -230,12 +239,22 @@
               <pattern>com.github.benmanes.caffeine</pattern>
               <shadedPattern>io.wcm.handler.url.shaded.com.github.benmanes.caffeine</shadedPattern>
             </relocation>
+            <relocation>
+              <pattern>org.apache.cocoon.xml</pattern>
+              <shadedPattern>io.wcm.handler.url.shaded.org.apache.cocoon.xml</shadedPattern>
+            </relocation>
           </relocations>
           <filters>
             <filter>
               <artifact>com.github.ben-manes.caffeine:caffeine</artifact>
               <excludes>
                 <exclude>module-info.class</exclude>
+                <exclude>META-INF/**</exclude>
+              </excludes>
+            </filter>
+            <filter>
+              <artifact>org.apache.cocoon:cocoon-xml</artifact>
+              <excludes>
                 <exclude>META-INF/**</exclude>
               </excludes>
             </filter>

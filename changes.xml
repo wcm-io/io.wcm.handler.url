@@ -24,7 +24,10 @@
     xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 https://maven.apache.org/xsd/changes-2.0.0.xsd">
   <body>
 
-    <release version="2.1.1" date="not released">
+    <release version="2.1.2" date="not released">
+      <action type="update" dev="sseifert">
+        Embed cocoon-xml instead of importing it to avoid usage of deprecated API.
+      </action>
       <action type="update" dev="sseifert" issue="18">
         global.jsp: Get rid of deprecated Granite XSS API.
       </action>
