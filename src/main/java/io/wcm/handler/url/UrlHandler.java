@@ -28,6 +28,7 @@ import com.day.cq.wcm.api.Page;
 
 /**
  * Rewrites and builds URLs for links to content pages and resources.
+ *
  * <p>
  * The interface is implemented by a Sling Model. You can adapt from
  * {@link org.apache.sling.api.SlingHttpServletRequest} or {@link org.apache.sling.api.resource.Resource} to get a
@@ -95,9 +96,11 @@ public interface UrlHandler {
 
   /**
    * Checks if the given URL is externalized.
+   *
    * <p>
    * An URL is treated as externalized if:
    * </p>
+   *
    * <ul>
    * <li>It starts with a protocol and a colon (e.g. http:, tel:, mailto:, javascript:)</li>
    * <li>It starts with // or #</li>
@@ -110,15 +113,18 @@ public interface UrlHandler {
   /**
    * Applies auto-detection of Site URL (author or publish instance) for given Site URL that is
    * configured in {@link SiteConfig}.
+   *
    * <p>
    * If this Site URL contains an <code>&lt;auto&gt;</code> placeholder the Site URL detection is enabled
    * and the Site URL is replaced with the current hostname (if possible). Otherwise the remaining part of the
    * Site URL string is returned as fallback.
    * </p>
+   *
    * <p>
    * Site URL auto-detection does only work in context of a request - outside request context the placeholders
    * is removed and the remaining string returned as fallback.
    * </p>
+   *
    * @param siteUrl Site URL (author or publish) {@link SiteConfig}.
    * @return Automatic detected Site URL or fallback
    */

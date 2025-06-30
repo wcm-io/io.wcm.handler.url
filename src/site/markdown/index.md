@@ -77,5 +77,5 @@ Sources: https://github.com/wcm-io/io.wcm.handler.url
 [graniteui-components]: graniteui-components.html
 [configuration]: configuration.html
 [apidocs]: apidocs/
-[changelog]: changes-report.html
+[changelog]: changes.html
 [caconfig]: ../../caconfig/

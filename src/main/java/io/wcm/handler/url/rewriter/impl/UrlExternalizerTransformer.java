@@ -22,8 +22,6 @@ package io.wcm.handler.url.rewriter.impl;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.cocoon.xml.sax.AbstractSAXPipe;
-import org.apache.cocoon.xml.sax.AttributesImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.rewriter.ProcessingComponentConfiguration;
 import org.apache.sling.rewriter.ProcessingContext;
@@ -31,25 +29,36 @@ import org.apache.sling.rewriter.Transformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
+import org.xml.sax.helpers.DefaultHandler;
 
 import io.wcm.handler.url.UrlHandler;
 
 /**
  * HTML transformer that rewrites URLs in certain HTML element attributes.
  */
-class UrlExternalizerTransformer extends AbstractSAXPipe implements Transformer {
+class UrlExternalizerTransformer implements Transformer {
 
   private UrlExternalizerTransformerConfig transformerConfig;
+  private ContentHandler contentHandler = EMPTY_CONTENT_HANDLER;
   private UrlHandler urlHandler;
 
   private static final Logger log = LoggerFactory.getLogger(UrlExternalizerTransformer.class.getName());
+  private static final ContentHandler EMPTY_CONTENT_HANDLER = new DefaultHandler();
 
   @Override
   public void init(ProcessingContext pipelineContext, ProcessingComponentConfiguration config) {
     log.trace("Initialize UrlExternalizerTransformer with config: {}", config.getConfiguration());
     transformerConfig = new UrlExternalizerTransformerConfig(config.getConfiguration());
     urlHandler = pipelineContext.getRequest().adaptTo(UrlHandler.class);
+  }
+
+  @Override
+  public void setContentHandler(ContentHandler contentHandler) {
+    this.contentHandler = contentHandler;
   }
 
   @Override
@@ -60,14 +69,14 @@ class UrlExternalizerTransformer extends AbstractSAXPipe implements Transformer 
     String rewriteAttr = transformerConfig.getElementAttributeNames().get(name);
     if (rewriteAttr == null) {
       log.trace("Rewrite element {}: Skip - No rewrite attribute configured.", name);
-      super.startElement(nsUri, name, raw, attrs);
+      contentHandler.startElement(nsUri, name, raw, attrs);
       return;
     }
 
     // validate URL handler
     if (urlHandler == null) {
       log.warn("Rewrite element {}: Skip - Unable to get URL handler/Integrator handler instance.", name);
-      super.startElement(nsUri, name, raw, attrs);
+      contentHandler.startElement(nsUri, name, raw, attrs);
       return;
     }
 
@@ -75,7 +84,7 @@ class UrlExternalizerTransformer extends AbstractSAXPipe implements Transformer 
     int attributeIndex = attrs.getIndex(rewriteAttr);
     if (attributeIndex < 0) {
       log.trace("Rewrite element {}: Skip - Attribute does not exist: {}", name, rewriteAttr);
-      super.startElement(nsUri, name, raw, attrs);
+      contentHandler.startElement(nsUri, name, raw, attrs);
       return;
     }
 
@@ -83,7 +92,7 @@ class UrlExternalizerTransformer extends AbstractSAXPipe implements Transformer 
     String url = attrs.getValue(attributeIndex);
     if (StringUtils.isEmpty(url)) {
       log.trace("Rewrite element {}: Skip - URL is empty.", name);
-      super.startElement(nsUri, name, raw, attrs);
+      contentHandler.startElement(nsUri, name, raw, attrs);
       return;
     }
 
@@ -111,7 +120,7 @@ class UrlExternalizerTransformer extends AbstractSAXPipe implements Transformer 
 
     if (StringUtils.equals(url, rewrittenUrl)) {
       log.debug("Rewrite element {}: Skip - URL is already externalized: {}", name, url);
-      super.startElement(nsUri, name, raw, attrs);
+      contentHandler.startElement(nsUri, name, raw, attrs);
       return;
     }
 
@@ -119,7 +128,57 @@ class UrlExternalizerTransformer extends AbstractSAXPipe implements Transformer 
     log.debug("Rewrite element {}: Rewrite URL {} to {}", name, url, rewrittenUrl);
     AttributesImpl newAttrs = new AttributesImpl(attrs);
     newAttrs.setValue(attributeIndex, rewrittenUrl);
-    super.startElement(nsUri, name, raw, newAttrs);
+    contentHandler.startElement(nsUri, name, raw, newAttrs);
+  }
+
+  @Override
+  public void setDocumentLocator(Locator locator) {
+    this.contentHandler.setDocumentLocator(locator);
+  }
+
+  @Override
+  public void startDocument() throws SAXException {
+    this.contentHandler.startDocument();
+  }
+
+  @Override
+  public void endDocument() throws SAXException {
+    this.contentHandler.endDocument();
+  }
+
+  @Override
+  public void startPrefixMapping(String prefix, String uri) throws SAXException {
+    this.contentHandler.startPrefixMapping(prefix, uri);
+  }
+
+  @Override
+  public void endPrefixMapping(String prefix) throws SAXException {
+    this.contentHandler.endPrefixMapping(prefix);
+  }
+
+  @Override
+  public void endElement(String uri, String localName, String qName) throws SAXException {
+    this.contentHandler.endElement(uri, localName, qName);
+  }
+
+  @Override
+  public void characters(char[] ch, int start, int length) throws SAXException {
+    this.contentHandler.characters(ch, start, length);
+  }
+
+  @Override
+  public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
+    this.contentHandler.ignorableWhitespace(ch, start, length);
+  }
+
+  @Override
+  public void processingInstruction(String target, String data) throws SAXException {
+    this.contentHandler.processingInstruction(target, data);
+  }
+
+  @Override
+  public void skippedEntity(String name) throws SAXException {
+    this.contentHandler.skippedEntity(name);
   }
 
   @Override

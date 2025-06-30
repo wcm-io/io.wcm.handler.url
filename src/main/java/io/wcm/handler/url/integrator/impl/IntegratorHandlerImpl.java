@@ -204,7 +204,7 @@ public final class IntegratorHandlerImpl implements IntegratorHandler {
         return true;
       }
       else if (integratorProtocol == IntegratorProtocol.AUTO) {
-        return RequestPath.hasSelector(request, IntegratorHandler.SELECTOR_INTEGRATORTEMPLATE_SECURE);
+        return RequestPath.hasSelector(request, SELECTOR_INTEGRATORTEMPLATE_SECURE);
       }
 
     }

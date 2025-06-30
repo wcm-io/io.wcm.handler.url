@@ -24,9 +24,11 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Names used for integrator handling.
+ *
  * <p>
  * Conventions:
  * </p>
+ *
  * <ul>
  * <li>NT_ prefix stands for "node type"</li>
  * <li>NN_ prefix stands for "node name"</li>

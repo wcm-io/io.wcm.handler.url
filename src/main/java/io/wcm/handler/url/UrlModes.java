@@ -38,6 +38,7 @@ public final class UrlModes {
   /**
    * Default mode: Does generate a full externalized URL only if both siteUrl and siteUrlSecure parameter
    * are set in context-specific configuration. If not set, only URLs without hostname are generated.
+   *
    * <p>
    * If the target is an internal content page, siteUrl or siteUrlSecure is chosen automatically depending on the secure
    * state of the page.
@@ -53,10 +54,12 @@ public final class UrlModes {
 
   /**
    * Enforce the generation of a full URL with protocol and hostname.
+   *
    * <p>
    * If the target is an internal content page, siteUrl or siteUrlSecure is chosen automatically depending on the secure
    * state of page.
    * </p>
+   *
    * <p>
    * On author instance always the author URL is used.
    * </p>
@@ -65,6 +68,7 @@ public final class UrlModes {
 
   /**
    * Enforce the generation of a full URL with protocol and hostname and non-secure mode.
+   *
    * <p>
    * On author instance always the author URL is used.
    * </p>
@@ -73,9 +77,11 @@ public final class UrlModes {
 
   /**
    * Enforce the generation of a full URL with protocol and hostname and secure mode.
+   *
    * <p>
    * If siteUrlSecure is not set, siteUrl is used.
    * </p>
+   *
    * <p>
    * On author instance always the author URL is used.
    * </p>
@@ -84,10 +90,12 @@ public final class UrlModes {
 
   /**
    * Enforce the generation of a full URL with hostname and "//" as protocol (protocol-relative mode).
+   *
    * <p>
    * Using "//" instead of "http://" or "https://" results in using the same protocol as the current request in the
    * browser.
    * </p>
+   *
    * <p>
    * On author instance always the author URL is used.
    * </p>
@@ -96,10 +104,12 @@ public final class UrlModes {
 
   /**
    * Enforce the generation of a full URL with protocol and hostname.
+   *
    * <p>
    * If the target is an internal content page, siteUrl or siteUrlSecure is chosen automatically depending on the secure
    * state of page.
    * </p>
+   *
    * <p>
    * Always uses the Site URLs configured for the publish instance, even if running on an author instance.
    * </p>
@@ -108,6 +118,7 @@ public final class UrlModes {
 
   /**
    * Enforce the generation of a full URL with protocol and hostname and non-secure mode.
+   *
    * <p>
    * Always uses the Site URLs configured for the publish instance, even if running on an author instance.
    * </p>
@@ -116,9 +127,11 @@ public final class UrlModes {
 
   /**
    * Enforce the generation of a full URL with protocol and hostname and secure mode.
+   *
    * <p>
    * If siteUrlSecure is not set, siteUrl is used.
    * </p>
+   *
    * <p>
    * Always uses the Site URLs configured for the publish instance, even if running on an author instance.
    * </p>
@@ -127,10 +140,12 @@ public final class UrlModes {
 
   /**
    * Enforce the generation of a full URL with hostname and "//" as protocol (protocol-relative mode).
+   *
    * <p>
    * Using "//" instead of "http://" or "https://" results in using the same protocol as the current request in the
    * browser.
    * </p>
+   *
    * <p>
    * Always uses the Site URLs configured for the publish instance, even if running on an author instance.
    * </p>

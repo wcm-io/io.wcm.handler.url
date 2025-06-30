@@ -22,7 +22,6 @@ package io.wcm.handler.url.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import io.wcm.handler.url.VanityMode;
 import org.apache.sling.api.resource.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +30,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.wcm.handler.url.SiteRootDetector;
+import io.wcm.handler.url.VanityMode;
 import io.wcm.handler.url.spi.UrlHandlerConfig;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
@@ -49,7 +49,7 @@ class DefaultUrlHandlerConfigTest {
   private UrlHandlerConfig underTest;
 
   @BeforeEach
-  void setUp() throws Exception {
+  void setUp() {
     context.registerService(SiteRootDetector.class, siteRootDetector);
     underTest = context.registerInjectActivateService(new DefaultUrlHandlerConfig());
   }

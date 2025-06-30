@@ -48,7 +48,7 @@ class SiteRootDetectorImplTest {
   private SiteRootDetector underTest;
 
   @BeforeEach
-  void setUp() throws Exception {
+  void setUp() {
     MockCAConfig.contextPathStrategyAbsoluteParent(context, ROOT_LEVEL);
     underTest = context.registerInjectActivateService(new SiteRootDetectorImpl());
   }

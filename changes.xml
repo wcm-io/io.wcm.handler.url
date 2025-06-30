@@ -19,9 +19,19 @@
   #L%
   -->
 
-<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/changes/1.0.0"
-    xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+<document xmlns="http://maven.apache.org/changes/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 https://maven.apache.org/xsd/changes-2.0.0.xsd">
   <body>
+
+    <release version="2.1.2" date="2025-06-30">
+      <action type="update" dev="sseifert" issue="20">
+        Eliminate usage of Cocoon XML (deprecated API).
+      </action>
+      <action type="update" dev="sseifert" issue="18">
+        global.jsp: Get rid of deprecated Granite XSS API.
+      </action>
+    </release>
 
     <release version="2.1.0" date="2024-03-21">
       <action type="add" dev="royteeuwen" issue="10">
