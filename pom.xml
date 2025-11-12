@@ -277,14 +277,22 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
 
-            <!-- Activate parallel test execution for JUnit 5 (run classes concurrently, methods sequentially, fixed parallelism) -->
+            <!-- Add JVM arguments for Java 21+ compatibility -->
+            <argLine>
+              --add-opens java.base/java.lang=ALL-UNNAMED
+              --add-opens java.base/java.lang.reflect=ALL-UNNAMED
+              --add-opens java.base/java.util=ALL-UNNAMED
+              --add-opens java.base/java.util.concurrent=ALL-UNNAMED
+              --add-opens java.base/java.net=ALL-UNNAMED
+              --add-opens java.base/java.io=ALL-UNNAMED
+              --add-opens java.base/sun.misc=ALL-UNNAMED
+              --add-opens java.base/sun.nio.ch=ALL-UNNAMED
+            </argLine>
+
+            <!-- Disable parallel test execution for Java 21+ due to AEM Mock thread-safety issues -->
             <properties>
               <configurationParameters>
-                junit.jupiter.execution.parallel.enabled = true
-                junit.jupiter.execution.parallel.mode.default = same_thread
-                junit.jupiter.execution.parallel.mode.classes.default = concurrent
-                junit.jupiter.execution.parallel.config.strategy = fixed
-                junit.jupiter.execution.parallel.config.fixed.parallelism = 2
+                junit.jupiter.execution.parallel.enabled = false
               </configurationParameters>
             </properties>
 
