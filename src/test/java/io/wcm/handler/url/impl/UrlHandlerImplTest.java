@@ -61,11 +61,13 @@ import io.wcm.handler.url.spi.UrlHandlerConfig;
 import io.wcm.handler.url.testcontext.AppAemContext;
 import io.wcm.handler.url.testcontext.DummyAppTemplate;
 import io.wcm.handler.url.testcontext.DummyUrlHandlerConfig;
+import io.wcm.handler.url.testcontext.JcrMockThreadSafe;
 import io.wcm.sling.commons.adapter.AdaptTo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 @ExtendWith(AemContextExtension.class)
+@JcrMockThreadSafe
 @SuppressWarnings("null")
 class UrlHandlerImplTest {
 

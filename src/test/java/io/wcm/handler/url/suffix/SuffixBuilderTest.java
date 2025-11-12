@@ -47,11 +47,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import com.day.cq.wcm.api.Page;
 
 import io.wcm.handler.url.testcontext.AppAemContext;
+import io.wcm.handler.url.testcontext.JcrMockThreadSafe;
 import io.wcm.sling.commons.resource.ImmutableValueMap;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 @ExtendWith(AemContextExtension.class)
+@JcrMockThreadSafe
 @SuppressWarnings("null")
 class SuffixBuilderTest {
 

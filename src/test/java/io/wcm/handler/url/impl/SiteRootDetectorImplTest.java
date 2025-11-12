@@ -30,12 +30,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import io.wcm.handler.url.SiteRootDetector;
+import io.wcm.handler.url.testcontext.JcrMockThreadSafe;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextBuilder;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import io.wcm.testing.mock.wcmio.caconfig.MockCAConfig;
 
 @ExtendWith(AemContextExtension.class)
+@JcrMockThreadSafe
 class SiteRootDetectorImplTest {
 
   private static final int ROOT_LEVEL = 2;

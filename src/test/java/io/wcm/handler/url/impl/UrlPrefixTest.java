@@ -35,11 +35,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import io.wcm.handler.url.UrlHandler;
 import io.wcm.handler.url.testcontext.AppAemContext;
+import io.wcm.handler.url.testcontext.JcrMockThreadSafe;
 import io.wcm.sling.commons.adapter.AdaptTo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 @ExtendWith(AemContextExtension.class)
+@JcrMockThreadSafe
 class UrlPrefixTest {
 
   final AemContext context = AppAemContext.newAemContext();

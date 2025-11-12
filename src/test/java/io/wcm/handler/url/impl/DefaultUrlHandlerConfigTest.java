@@ -32,11 +32,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import io.wcm.handler.url.SiteRootDetector;
 import io.wcm.handler.url.VanityMode;
 import io.wcm.handler.url.spi.UrlHandlerConfig;
+import io.wcm.handler.url.testcontext.JcrMockThreadSafe;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 @ExtendWith(AemContextExtension.class)
 @ExtendWith(MockitoExtension.class)
+@JcrMockThreadSafe
 class DefaultUrlHandlerConfigTest {
 
   private static final int ROOT_LEVEL = 2;

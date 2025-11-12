@@ -38,10 +38,12 @@ import io.wcm.handler.url.integrator.IntegratorNameConstants;
 import io.wcm.handler.url.integrator.IntegratorProtocol;
 import io.wcm.handler.url.testcontext.AppAemContext;
 import io.wcm.handler.url.testcontext.DummyAppTemplate;
+import io.wcm.handler.url.testcontext.JcrMockThreadSafe;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 @ExtendWith(AemContextExtension.class)
+@JcrMockThreadSafe
 @SuppressWarnings("null")
 class IntegratorHandlerImplTest {
 

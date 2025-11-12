@@ -41,12 +41,14 @@ import org.xml.sax.SAXException;
 
 import io.wcm.handler.url.integrator.IntegratorHandler;
 import io.wcm.handler.url.testcontext.AppAemContext;
+import io.wcm.handler.url.testcontext.JcrMockThreadSafe;
 import io.wcm.sling.commons.resource.ImmutableValueMap;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 @ExtendWith(AemContextExtension.class)
 @ExtendWith(MockitoExtension.class)
+@JcrMockThreadSafe
 class UrlExternalizerTransformerTest {
 
   private final AemContext context = AppAemContext.newAemContext();

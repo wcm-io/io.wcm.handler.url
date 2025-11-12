@@ -35,10 +35,12 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import io.wcm.handler.url.integrator.IntegratorPlaceholder;
+import io.wcm.handler.url.testcontext.JcrMockThreadSafe;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 @ExtendWith(AemContextExtension.class)
+@JcrMockThreadSafe
 @SuppressWarnings("null")
 class ExternalizerTest {
 
