@@ -30,6 +30,7 @@ import org.apache.sling.caconfig.annotation.Property;
 public @interface SiteConfig {
 
   /**
+   * Gets the site URL.
    * @return Site URL
    */
   @Property(label = "Site URL",
@@ -37,6 +38,7 @@ public @interface SiteConfig {
   String siteUrl();
 
   /**
+   * Gets the secure site URL.
    * @return Site URL Secure
    */
   @Property(label = "Site URL Secure",
@@ -44,6 +46,7 @@ public @interface SiteConfig {
   String siteUrlSecure();
 
   /**
+   * Gets the author URL.
    * @return Author URL
    */
   @Property(label = "Author URL",

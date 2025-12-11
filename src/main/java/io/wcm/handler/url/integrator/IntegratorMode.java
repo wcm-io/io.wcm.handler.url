@@ -29,17 +29,20 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface IntegratorMode {
 
   /**
+   * Gets the integrator mode ID.
    * @return Integrator mode ID (is stored as identifier in repository)
    */
   @NotNull
   String getId();
 
   /**
+   * Checks if URL placeholders should be used.
    * @return true if placeholders should be used for externalizing URLs instead of site urls
    */
   boolean isUseUrlPlaceholders();
 
   /**
+   * Checks if protocol detection is automatic.
    * @return true if the prototcol to be used for externalizing URLs in integrator mode is detected automatically
    *         or defined in the integrator page itself.
    */

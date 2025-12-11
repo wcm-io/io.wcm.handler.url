@@ -71,6 +71,7 @@ public abstract class UrlHandlerConfig implements ContextAwareService {
   }
 
   /**
+   * Gets the default URL mode.
    * @return Default URL mode that is used if no URL mode is specified
    */
   public @NotNull UrlMode getDefaultUrlMode() {
@@ -78,6 +79,7 @@ public abstract class UrlHandlerConfig implements ContextAwareService {
   }
 
   /**
+   * Gets the supported integrator modes.
    * @return Supported integrator modes
    */
   public @NotNull Collection<IntegratorMode> getIntegratorModes() {

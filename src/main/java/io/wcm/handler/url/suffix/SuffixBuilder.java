@@ -96,6 +96,7 @@ public final class SuffixBuilder {
   }
 
   /**
+   * Creates a suffix builder that discards all existing suffix state.
    * @return a {@link SuffixBuilder} that discards all existing suffix state when constructing a new suffix
    */
   public static @NotNull SuffixBuilder thatDiscardsAllSuffixState() {
@@ -103,6 +104,7 @@ public final class SuffixBuilder {
   }
 
   /**
+   * Creates a suffix builder that keeps only resource parts.
    * @param request Sling request
    * @return a {@link SuffixBuilder} that discards everything but the *resource* parts of the suffix
    */
@@ -112,6 +114,7 @@ public final class SuffixBuilder {
   }
 
   /**
+   * Creates a suffix builder that keeps only named parts.
    * @param request Sling request
    * @param keysToKeep Keys to keep
    * @return a {@link SuffixBuilder} that keeps only the named key/value-parts defined by pKeysToKeep
@@ -123,6 +126,7 @@ public final class SuffixBuilder {
   }
 
   /**
+   * Creates a suffix builder that keeps named parts and resource parts.
    * @param request Sling request
    * @param keysToKeep Keys to keep
    * @return a {@link SuffixBuilder} that keeps the named key/value-parts defined by pKeysToKeep and all resource
@@ -135,6 +139,7 @@ public final class SuffixBuilder {
   }
 
   /**
+   * Creates a suffix builder that keeps all parts from the current request.
    * @param request Sling request
    * @return a {@link SuffixBuilder} that keeps all parts from the current request's suffix when constructing a new
    *         suffix
@@ -144,6 +149,7 @@ public final class SuffixBuilder {
   }
 
   /**
+   * Creates a suffix builder that discards resource parts.
    * @param request Sling request
    * @return a {@link SuffixBuilder} that will discard the resource parts, but keep all named key/value-parts
    */
@@ -153,6 +159,7 @@ public final class SuffixBuilder {
   }
 
   /**
+   * Creates a suffix builder that discards named parts.
    * @param request Sling request
    * @param keysToDiscard the keys of the named parts to discard
    * @return a {@link SuffixBuilder} that will keep all parts except those named key/value-parts defined by
@@ -164,6 +171,7 @@ public final class SuffixBuilder {
   }
 
   /**
+   * Creates a suffix builder that discards resource and named parts.
    * @param request Sling request
    * @param keysToDiscard the keys of the named parts to discard
    * @return {@link SuffixBuilder} that will discard all resource parts and the named parts defined by pKeysToDiscard
@@ -175,6 +183,7 @@ public final class SuffixBuilder {
   }
 
   /**
+   * Creates a suffix builder that discards a specific resource and named parts.
    * @param request Sling request
    * @param resourcePathToDiscard relative path of the resource to discard
    * @param keysToDiscard the keys of the named parts to discard
