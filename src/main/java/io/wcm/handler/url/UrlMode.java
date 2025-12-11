@@ -44,6 +44,7 @@ import io.wcm.handler.url.spi.UrlHandlerConfig;
 public interface UrlMode {
 
   /**
+   * Gets the URL mode ID.
    * @return Id uniquely identifying the URL mode
    */
   @NotNull

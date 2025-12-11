@@ -118,6 +118,7 @@ public final class SiteRoot {
   }
 
   /**
+   * Checks if the given page is the site root page.
    * @param page Page
    * @return true if given page is the site root page
    */

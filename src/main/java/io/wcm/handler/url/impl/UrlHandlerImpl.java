@@ -213,7 +213,7 @@ public final class UrlHandlerImpl implements UrlHandler {
     }
     if (externalizedUrl != null && !Externalizer.isExternalized(externalizedUrl)) {
       // add resource URL prefix (scheme/hostname or integrator placeholder) if required
-      String resourceUrlPrefix = getResourceUrlPrefix(urlMode, resource);
+      String resourceUrlPrefix = getResourceUrlPrefix(mode, resource);
       externalizedUrl = StringUtils.defaultString(resourceUrlPrefix) + externalizedUrl; //NOPMD
     }
     return externalizedUrl;
