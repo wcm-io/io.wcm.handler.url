@@ -434,6 +434,23 @@ class UrlHandlerImplTest {
   }
 
   @Test
+  void testExternalizeLinkUrlHostBySlingMappingWithUrlModeNoHostname() {
+    // create more pages to simulate internal link
+    Page targetPage = context.create().page("/content/unittest/de_test/brand/de/section2/page2a",
+        DummyAppTemplate.CONTENT.getTemplatePath());
+
+    // set config flag
+    ((DummyUrlHandlerConfig)context.getService(UrlHandlerConfig.class)).setHostProvidedBySlingMapping(true);
+
+    // apply sling mapping with host name
+    SlingHttpServletRequest request = applyHostNameMapping(context.request());
+
+    UrlHandler urlHandler = AdaptTo.notNull(request, UrlHandler.class);
+    assertEquals("/context/content/unittest/de_test/brand/de/section2/page2a.html",
+        externalizeLinkUrl(urlHandler, targetPage.getPath() + ".html", null, UrlModes.NO_HOSTNAME));
+  }
+
+  @Test
   @SuppressWarnings("java:S5961") // number of asserts
   void testExternalizeResourceUrl() {
     // create current page in site context
@@ -548,6 +565,23 @@ class UrlHandlerImplTest {
     UrlHandler urlHandler = AdaptTo.notNull(request, UrlHandler.class);
     assertEquals("http://www.domain.com/context/apps/testapp/docroot/img.png",
         externalizeResourceUrl(urlHandler, "/apps/testapp/docroot/img.png", UrlModes.FULL_URL));
+  }
+
+  @Test
+  void testExternalizeResourceUrlHostBySlingMappingWithUrlModeNoHostname() {
+    // create more pages to simulate internal link
+    context.create().page("/content/unittest/de_test/brand/de/section2/page2a",
+        DummyAppTemplate.CONTENT.getTemplatePath());
+
+    // set config flag
+    ((DummyUrlHandlerConfig)context.getService(UrlHandlerConfig.class)).setHostProvidedBySlingMapping(true);
+
+    // apply sling mapping with host name
+    SlingHttpServletRequest request = applyHostNameMapping(context.request());
+
+    UrlHandler urlHandler = AdaptTo.notNull(request, UrlHandler.class);
+    assertEquals("/context/apps/testapp/docroot/img.png",
+        externalizeResourceUrl(urlHandler, "/apps/testapp/docroot/img.png", UrlModes.NO_HOSTNAME));
   }
 
   @Test

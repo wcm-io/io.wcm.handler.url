@@ -76,4 +76,12 @@ public interface UrlMode {
   String getResourceUrlPrefix(@NotNull Adaptable adaptable, @NotNull Set<String> runModes,
       @Nullable Page currentPage, @Nullable Resource targetResource);
 
+  /**
+   * Forces protocol and hostname to be stripped from URLs even is relying to hostnames provided by Sling Mapping.
+   * @return true if host name should always be stripped
+   */
+  default boolean isForceStripHostName() {
+    return false;
+  }
+
 }
