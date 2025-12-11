@@ -41,7 +41,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.wcm.handler.url.UrlBuilder;
 import io.wcm.handler.url.UrlHandler;
 import io.wcm.handler.url.UrlMode;
-import io.wcm.handler.url.UrlModes;
 import io.wcm.handler.url.VanityMode;
 import io.wcm.handler.url.impl.clientlib.ClientlibProxyRewriter;
 import io.wcm.handler.url.spi.UrlHandlerConfig;
@@ -203,7 +202,8 @@ public final class UrlHandlerImpl implements UrlHandler {
     // check for reference to static resource from proxied client library
     String externalizedUrl = clientlibProxyRewriter.rewriteStaticResourcePath(url);
 
-    if (urlHandlerConfig.isHostProvidedBySlingMapping() && !UrlModes.NO_HOSTNAME.equals(urlMode)) {
+    UrlMode mode = ObjectUtils.defaultIfNull(urlMode, urlHandlerConfig.getDefaultUrlMode());
+    if (urlHandlerConfig.isHostProvidedBySlingMapping() && !mode.isForceStripHostName()) {
       // apply sling mapping with host
       externalizedUrl = Externalizer.externalizeUrlWithHost(externalizedUrl, resolver, request);
     }
