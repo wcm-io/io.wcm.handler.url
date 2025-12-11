@@ -21,6 +21,7 @@ package io.wcm.handler.url.impl;
 
 import java.util.Set;
 
+import io.wcm.handler.url.UrlModes;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -157,7 +158,7 @@ public final class UrlHandlerImpl implements UrlHandler {
     }
 
     String externalizedUrl;
-    if (urlHandlerConfig.isHostProvidedBySlingMapping()) {
+    if (urlHandlerConfig.isHostProvidedBySlingMapping() && !UrlModes.NO_HOSTNAME.equals(urlMode)) {
       // apply sling mapping with host
       externalizedUrl = Externalizer.externalizeUrlWithHost(url, resolver, request);
     }
@@ -202,7 +203,7 @@ public final class UrlHandlerImpl implements UrlHandler {
     // check for reference to static resource from proxied client library
     String externalizedUrl = clientlibProxyRewriter.rewriteStaticResourcePath(url);
 
-    if (urlHandlerConfig.isHostProvidedBySlingMapping()) {
+    if (urlHandlerConfig.isHostProvidedBySlingMapping() && !UrlModes.NO_HOSTNAME.equals(urlMode)) {
       // apply sling mapping with host
       externalizedUrl = Externalizer.externalizeUrlWithHost(externalizedUrl, resolver, request);
     }
