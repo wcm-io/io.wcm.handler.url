@@ -1,6 +1,6 @@
 <img src="https://wcm.io/images/favicon-16@2x.png"/> URL Handler
 ======
-[![Build](https://github.com/wcm-io/io.wcm.handler.url/workflows/Build/badge.svg?branch=develop)](https://github.com/wcm-io/io.wcm.handler.url/actions?query=workflow%3ABuild+branch%3Adevelop)
+[![Build](https://github.com/wcm-io/io.wcm.handler.url/actions/workflows/maven-build.yml/badge.svg?branch=develop)](https://github.com/wcm-io/io.wcm.handler.url/actions?query=workflow%3ABuild+branch%3Adevelop)
 [![Maven Central](https://img.shields.io/maven-central/v/io.wcm/io.wcm.handler.url)](https://repo1.maven.org/maven2/io/wcm/io.wcm.handler.url/)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=wcm-io_io.wcm.handler.url&metric=coverage)](https://sonarcloud.io/summary/new_code?id=wcm-io_io.wcm.handler.url)
 

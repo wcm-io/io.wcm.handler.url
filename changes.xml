@@ -24,6 +24,12 @@
     xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 https://maven.apache.org/xsd/changes-2.0.0.xsd">
   <body>
 
+    <release version="2.1.4" date="2025-12-15">
+      <action type="fix" dev="rubnig" issue="33">
+        Ensure Sling mapping is not applied for NO_HOSTNAME url mode.
+      </action>
+    </release>
+
     <release version="2.1.2" date="2025-06-30">
       <action type="update" dev="sseifert" issue="20">
         Eliminate usage of Cocoon XML (deprecated API).

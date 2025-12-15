@@ -144,6 +144,7 @@ public final class UrlHandlerImpl implements UrlHandler {
     return Externalizer.isExternalized(url);
   }
 
+  @SuppressWarnings("null")
   String externalizeLinkUrl(final String url, final Page targetPage, final UrlMode urlMode) {
 
     // check for empty url
@@ -157,7 +158,8 @@ public final class UrlHandlerImpl implements UrlHandler {
     }
 
     String externalizedUrl;
-    if (urlHandlerConfig.isHostProvidedBySlingMapping()) {
+    UrlMode mode = ObjectUtils.defaultIfNull(urlMode, urlHandlerConfig.getDefaultUrlMode());
+    if (urlHandlerConfig.isHostProvidedBySlingMapping() && !mode.isForceStripHostName()) {
       // apply sling mapping with host
       externalizedUrl = Externalizer.externalizeUrlWithHost(url, resolver, request);
     }
@@ -167,19 +169,18 @@ public final class UrlHandlerImpl implements UrlHandler {
     }
     if (externalizedUrl != null && !Externalizer.isExternalized(externalizedUrl)) {
       // add link URL prefix (scheme/hostname or integrator placeholder) if required
-      String linkUrlPrefix = getLinkUrlPrefix(urlMode, targetPage);
+      String linkUrlPrefix = getLinkUrlPrefix(mode, targetPage);
       externalizedUrl = StringUtils.defaultString(linkUrlPrefix) + externalizedUrl; //NOPMD
     }
     return externalizedUrl;
   }
 
-  @SuppressWarnings("null")
-  private String getLinkUrlPrefix(UrlMode urlMode, Page targetPage) {
-    UrlMode mode = ObjectUtils.defaultIfNull(urlMode, urlHandlerConfig.getDefaultUrlMode());
-    String configuredUrlPrefix = mode.getLinkUrlPrefix(self, instanceTypeService.getRunModes(), currentPage, targetPage);
+  private String getLinkUrlPrefix(@NotNull UrlMode urlMode, Page targetPage) {
+    String configuredUrlPrefix = urlMode.getLinkUrlPrefix(self, instanceTypeService.getRunModes(), currentPage, targetPage);
     return UrlPrefix.applyAutoDetection(configuredUrlPrefix, self);
   }
 
+  @SuppressWarnings("null")
   String externalizeResourceUrl(final String url, final Resource targetResource, final UrlMode urlMode) {
 
     // check for empty path
@@ -202,7 +203,8 @@ public final class UrlHandlerImpl implements UrlHandler {
     // check for reference to static resource from proxied client library
     String externalizedUrl = clientlibProxyRewriter.rewriteStaticResourcePath(url);
 
-    if (urlHandlerConfig.isHostProvidedBySlingMapping()) {
+    UrlMode mode = ObjectUtils.defaultIfNull(urlMode, urlHandlerConfig.getDefaultUrlMode());
+    if (urlHandlerConfig.isHostProvidedBySlingMapping() && !mode.isForceStripHostName()) {
       // apply sling mapping with host
       externalizedUrl = Externalizer.externalizeUrlWithHost(externalizedUrl, resolver, request);
     }
@@ -212,16 +214,14 @@ public final class UrlHandlerImpl implements UrlHandler {
     }
     if (externalizedUrl != null && !Externalizer.isExternalized(externalizedUrl)) {
       // add resource URL prefix (scheme/hostname or integrator placeholder) if required
-      String resourceUrlPrefix = getResourceUrlPrefix(urlMode, resource);
+      String resourceUrlPrefix = getResourceUrlPrefix(mode, resource);
       externalizedUrl = StringUtils.defaultString(resourceUrlPrefix) + externalizedUrl; //NOPMD
     }
     return externalizedUrl;
   }
 
-  @SuppressWarnings("null")
-  private String getResourceUrlPrefix(UrlMode urlMode, Resource targetResource) {
-    UrlMode mode = ObjectUtils.defaultIfNull(urlMode, urlHandlerConfig.getDefaultUrlMode());
-    String configuredUrlPrefix = mode.getResourceUrlPrefix(self, instanceTypeService.getRunModes(), currentPage, targetResource);
+  private String getResourceUrlPrefix(@NotNull UrlMode urlMode, Resource targetResource) {
+    String configuredUrlPrefix = urlMode.getResourceUrlPrefix(self, instanceTypeService.getRunModes(), currentPage, targetResource);
     return UrlPrefix.applyAutoDetection(configuredUrlPrefix, self);
   }
 

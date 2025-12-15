@@ -39,6 +39,7 @@ public final class FilteringSuffixStateStrategy implements SuffixStateKeepingStr
   private final Predicate<String> suffixPartFilter;
 
   /**
+   * Creates a new filtering suffix state strategy.
    * @param suffixPartFilter the {@link Predicate} that defines which suffix parts are allowed
    */
   public FilteringSuffixStateStrategy(Predicate<String> suffixPartFilter) {

@@ -51,4 +51,9 @@ public final class NoHostnameUrlMode extends AbstractUrlMode {
     return null;
   }
 
+  @Override
+  public boolean isForceStripHostName() {
+    return true;
+  }
+
 }

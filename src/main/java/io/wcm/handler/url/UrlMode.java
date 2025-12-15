@@ -44,6 +44,7 @@ import io.wcm.handler.url.spi.UrlHandlerConfig;
 public interface UrlMode {
 
   /**
+   * Gets the URL mode ID.
    * @return Id uniquely identifying the URL mode
    */
   @NotNull
@@ -75,5 +76,13 @@ public interface UrlMode {
   @Nullable
   String getResourceUrlPrefix(@NotNull Adaptable adaptable, @NotNull Set<String> runModes,
       @Nullable Page currentPage, @Nullable Resource targetResource);
+
+  /**
+   * Forces protocol and hostname to be stripped from URLs even is relying to hostnames provided by Sling Mapping.
+   * @return true if host name should always be stripped
+   */
+  default boolean isForceStripHostName() {
+    return false;
+  }
 
 }
