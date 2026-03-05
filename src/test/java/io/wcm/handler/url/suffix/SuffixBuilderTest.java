@@ -112,8 +112,8 @@ class SuffixBuilderTest {
 
   private Resource createResource(String path, String resourceType) {
     return context.create().resource(path, ImmutableValueMap.builder()
-        .put(ResourceResolver.PROPERTY_RESOURCE_TYPE, resourceType)
-        .build());
+      .put(ResourceResolver.PROPERTY_RESOURCE_TYPE, resourceType)
+      .build());
   }
 
   @Test
@@ -354,10 +354,10 @@ class SuffixBuilderTest {
   void testPageSortedMapOfStringString() {
     // construct suffix to a resource with multiple key/value-pairs
     ValueMap map = ImmutableValueMap.builder()
-        .put("abc", 123)
-        .put("ghi", 789)
-        .put("def", 456)
-        .build();
+      .put("abc", 123)
+      .put("ghi", 789)
+      .put("def", 456)
+      .build();
     String suffix = getBuilder().putAll(map).build();
     // suffix should contain all entries, in alphabetical order separated with /
     assertEquals("abc=123" + SUFFIX_PART_DELIMITER + "def=456" + SUFFIX_PART_DELIMITER + "ghi=789", suffix);
@@ -377,9 +377,9 @@ class SuffixBuilderTest {
     String nastyValue2 = NASTY_STRING_VALUE + "2";
 
     ValueMap keyValueMap = ImmutableValueMap.builder()
-        .put(nastyKey1, nastyValue1)
-        .put(nastyKey2, nastyValue2)
-        .build();
+      .put(nastyKey1, nastyValue1)
+      .put(nastyKey2, nastyValue2)
+      .build();
 
     // create resources with nasty (but valid) node name
     Page basePage = context.create().page("/content/a", "template", "title");
@@ -433,9 +433,9 @@ class SuffixBuilderTest {
     String slashValue2 = "my/value2";
 
     ValueMap keyValueMap = ImmutableValueMap.builder()
-        .put(slashKey1, slashValue1)
-        .put(slashKey2, slashValue2)
-        .build();
+      .put(slashKey1, slashValue1)
+      .put(slashKey2, slashValue2)
+      .build();
 
     // create resources with valid node name
     Page basePage = context.create().page("/content/a", "template", "title");
@@ -563,10 +563,10 @@ class SuffixBuilderTest {
     List<Resource> resources = Arrays.asList(resourceAA, resourceB, resourceC);
 
     ValueMap map = ImmutableValueMap.builder()
-        .put("abc", true)
-        .put("ghi", 123)
-        .put("jkl", NASTY_STRING_VALUE)
-        .build();
+      .put("abc", true)
+      .put("ghi", 123)
+      .put("jkl", NASTY_STRING_VALUE)
+      .build();
 
     SuffixBuilder builder = getBuilder();
     return builder.resources(resources, currentPage.getContentResource()).putAll(map).build();

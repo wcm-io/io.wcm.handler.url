@@ -58,34 +58,34 @@ public final class UrlSuffixUtil {
    * Map with special chars and their replacements that are escaped with special ~ and hexcode
    */
   private static final String[][] SPECIAL_CHARS_MAPPING = {
-    // escape delimiter chars
-    {
-      Character.toString(SUFFIX_PART_DELIMITER), ESCAPE_DELIMITER + hexCode(SUFFIX_PART_DELIMITER)
-    },
-    {
-      Character.toString(KEY_VALUE_DELIMITER), ESCAPE_DELIMITER + hexCode(KEY_VALUE_DELIMITER)
-    },
-    // '.' must be custom-escaped (if no file extension is added to suffix,
-    // anything after a dot would be interpreted as file extension during parsing)
-    {
-      Character.toString('.'), ESCAPE_DELIMITER + hexCode('.')
-    },
-    // escape '%' to avoid confusion with URL escaping
-    {
-      Character.toString('%'), ESCAPE_DELIMITER + hexCode('%')
-    },
-    // '/' must be custom-escaped (dispatcher/webserver may filter out/misinterpret urls with unescaped slashes)
-    {
-      Character.toString('/'), ESCAPE_DELIMITER + hexCode('/')
-    },
-    // escape ':'
-    {
-      Character.toString(':'), ESCAPE_DELIMITER + hexCode(':')
-    },
-    // escape ' ' as well (singular problem occurred once)
-    {
-      Character.toString(' '), ESCAPE_DELIMITER + hexCode(' ')
-    }
+      // escape delimiter chars
+      {
+          Character.toString(SUFFIX_PART_DELIMITER), ESCAPE_DELIMITER + hexCode(SUFFIX_PART_DELIMITER)
+      },
+      {
+          Character.toString(KEY_VALUE_DELIMITER), ESCAPE_DELIMITER + hexCode(KEY_VALUE_DELIMITER)
+      },
+      // '.' must be custom-escaped (if no file extension is added to suffix,
+      // anything after a dot would be interpreted as file extension during parsing)
+      {
+          Character.toString('.'), ESCAPE_DELIMITER + hexCode('.')
+      },
+      // escape '%' to avoid confusion with URL escaping
+      {
+          Character.toString('%'), ESCAPE_DELIMITER + hexCode('%')
+      },
+      // '/' must be custom-escaped (dispatcher/webserver may filter out/misinterpret urls with unescaped slashes)
+      {
+          Character.toString('/'), ESCAPE_DELIMITER + hexCode('/')
+      },
+      // escape ':'
+      {
+          Character.toString(':'), ESCAPE_DELIMITER + hexCode(':')
+      },
+      // escape ' ' as well (singular problem occurred once)
+      {
+          Character.toString(' '), ESCAPE_DELIMITER + hexCode(' ')
+      }
   };
 
   /**

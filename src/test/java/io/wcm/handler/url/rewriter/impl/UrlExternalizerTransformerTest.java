@@ -64,11 +64,11 @@ class UrlExternalizerTransformerTest {
   void setUp() {
     when(processingContext.getRequest()).thenReturn(context.request());
     when(processingComponentConfiguration.getConfiguration()).thenReturn(ImmutableValueMap.builder()
-        .put(UrlExternalizerTransformerConfig.PN_REWRITE_ELEMENTS, new String[] {
-            "element1:attr1",
-            "element2:attr2"
-        })
-        .build());
+      .put(UrlExternalizerTransformerConfig.PN_REWRITE_ELEMENTS, new String[] {
+          "element1:attr1",
+          "element2:attr2"
+      })
+      .build());
 
     UrlExternalizerTransformerFactory factory = context.registerInjectActivateService(new UrlExternalizerTransformerFactory());
 

@@ -150,7 +150,9 @@ public final class IntegratorHandlerImpl implements IntegratorHandler {
    * @param properties Content container
    * @return Integrator mode
    */
-  @SuppressWarnings({ "null", "java:S2637" })
+  @SuppressWarnings({
+      "null", "java:S2637"
+  })
   @SuppressFBWarnings("NP_NONNULL_RETURN_VIOLATION")
   private @NotNull IntegratorMode getIntegratorMode(ValueMap properties) {
     IntegratorMode mode = null;
