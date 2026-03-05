@@ -70,22 +70,22 @@ abstract class AbstractUrlModeTest {
     integratorPageSimple = context.create().page("/content/unittest/de_test/brand/de/section2/page4",
         DummyAppTemplate.INTEGRATOR.getTemplatePath(),
         ImmutableValueMap.builder()
-        .put(IntegratorNameConstants.PN_INTEGRATOR_MODE, IntegratorModes.SIMPLE.getId())
-        .put(IntegratorNameConstants.PN_INTEGRATOR_PROTOCOL, IntegratorProtocol.HTTP.name())
-        .build());
+          .put(IntegratorNameConstants.PN_INTEGRATOR_MODE, IntegratorModes.SIMPLE.getId())
+          .put(IntegratorNameConstants.PN_INTEGRATOR_PROTOCOL, IntegratorProtocol.HTTP.name())
+          .build());
 
     integratorPageSimpleSecure = context.create().page("/content/unittest/de_test/brand/de/section2/page5",
         DummyAppTemplate.INTEGRATOR.getTemplatePath(),
         ImmutableValueMap.builder()
-        .put(IntegratorNameConstants.PN_INTEGRATOR_MODE, IntegratorModes.SIMPLE.getId())
-        .put(IntegratorNameConstants.PN_INTEGRATOR_PROTOCOL, IntegratorProtocol.HTTPS.name())
-        .build());
+          .put(IntegratorNameConstants.PN_INTEGRATOR_MODE, IntegratorModes.SIMPLE.getId())
+          .put(IntegratorNameConstants.PN_INTEGRATOR_PROTOCOL, IntegratorProtocol.HTTPS.name())
+          .build());
 
     integratorPageExtended = context.create().page("/content/unittest/de_test/brand/de/section2/page6",
         DummyAppTemplate.INTEGRATOR.getTemplatePath(),
         ImmutableValueMap.builder()
-        .put(IntegratorNameConstants.PN_INTEGRATOR_MODE, IntegratorModes.EXTENDED.getId())
-        .build());
+          .put(IntegratorNameConstants.PN_INTEGRATOR_MODE, IntegratorModes.EXTENDED.getId())
+          .build());
 
     instanceTypeService = context.getService(InstanceTypeService.class);
 

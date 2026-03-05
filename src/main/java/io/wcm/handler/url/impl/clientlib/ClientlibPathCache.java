@@ -68,25 +68,25 @@ final class ClientlibPathCache implements EventListener, AutoCloseable {
       + "'io.wcm.handler.url:" + CLIENTLIBS_SERVICE + "' - see https://wcm.io/handler/url/configuration.html";
 
   private final LoadingCache<String, ClientlibPathCacheEntry> cache = Caffeine.newBuilder()
-      .maximumSize(10000)
-      .build(path -> {
-        try (ResourceResolver resourceResolver = getServiceResourceResolver()) {
-          Resource resource = resourceResolver.getResource(path);
-          if (resource != null) {
-            Node node = resource.adaptTo(Node.class);
-            if (node != null && node.isNodeType(NT_CLIENTLIBRARY)) {
-              boolean isAllowProxy = resource.getValueMap().get(PN_ALLOWPROXY, false);
-              ClientlibPathCacheEntry entry = new ClientlibPathCacheEntry(path, true, isAllowProxy);
-              log.debug("Detected client library: {}", entry);
-              return entry;
-            }
+    .maximumSize(10000)
+    .build(path -> {
+      try (ResourceResolver resourceResolver = getServiceResourceResolver()) {
+        Resource resource = resourceResolver.getResource(path);
+        if (resource != null) {
+          Node node = resource.adaptTo(Node.class);
+          if (node != null && node.isNodeType(NT_CLIENTLIBRARY)) {
+            boolean isAllowProxy = resource.getValueMap().get(PN_ALLOWPROXY, false);
+            ClientlibPathCacheEntry entry = new ClientlibPathCacheEntry(path, true, isAllowProxy);
+            log.debug("Detected client library: {}", entry);
+            return entry;
           }
         }
-        catch (LoginException ex) {
-          log.warn(SERVICE_USER_MAPPING_WARNING);
-        }
-        return new ClientlibPathCacheEntry(path, false, false);
-      });
+      }
+      catch (LoginException ex) {
+        log.warn(SERVICE_USER_MAPPING_WARNING);
+      }
+      return new ClientlibPathCacheEntry(path, false, false);
+    });
 
   private static final Logger log = LoggerFactory.getLogger(ClientlibPathCache.class);
 
@@ -116,11 +116,13 @@ final class ClientlibPathCache implements EventListener, AutoCloseable {
         log.debug("Enable observation for client libraries.");
         JackrabbitObservationManager observationManager = (JackrabbitObservationManager)session.getWorkspace().getObservationManager();
         JackrabbitEventFilter eventFilter = new JackrabbitEventFilter()
-            .setEventTypes(NODE_ADDED | NODE_MOVED | NODE_REMOVED | PROPERTY_ADDED | PROPERTY_CHANGED | PROPERTY_REMOVED)
-            .setAbsPath("/apps")
-            .setAdditionalPaths("/apps", "/libs")
-            .setIsDeep(true)
-            .setNodeTypes(new String[] { NT_CLIENTLIBRARY });
+          .setEventTypes(NODE_ADDED | NODE_MOVED | NODE_REMOVED | PROPERTY_ADDED | PROPERTY_CHANGED | PROPERTY_REMOVED)
+          .setAbsPath("/apps")
+          .setAdditionalPaths("/apps", "/libs")
+          .setIsDeep(true)
+          .setNodeTypes(new String[] {
+              NT_CLIENTLIBRARY
+          });
         observationManager.addEventListener(this, eventFilter);
       }
       catch (RepositoryException ex) {

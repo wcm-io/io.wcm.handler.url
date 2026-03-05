@@ -202,7 +202,9 @@ public final class SuffixBuilder {
    * @param value the value
    * @return this
    */
-  @SuppressWarnings({ "null", "unused", "java:S2589" })
+  @SuppressWarnings({
+      "null", "unused", "java:S2589"
+  })
   public @NotNull SuffixBuilder put(@NotNull String key, @NotNull Object value) {
     if (key == null) {
       throw new IllegalArgumentException("Key must not be null");
@@ -286,8 +288,8 @@ public final class SuffixBuilder {
   @SuppressWarnings("null")
   public @NotNull SuffixBuilder pages(@NotNull List<Page> pages, @NotNull Page suffixBasePage) {
     List<Resource> resources = pages.stream()
-        .map(page -> page.adaptTo(Resource.class))
-        .collect(Collectors.toList());
+      .map(page -> page.adaptTo(Resource.class))
+      .collect(Collectors.toList());
     return resources(resources, AdaptTo.notNull(suffixBasePage, Resource.class));
   }
 

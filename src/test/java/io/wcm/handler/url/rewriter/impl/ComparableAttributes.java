@@ -47,9 +47,9 @@ class ComparableAttributes extends AttributesImpl {
     StringBuilder serialized = new StringBuilder();
     for (int i = 0; i < attributes.getLength(); i++) {
       serialized.append(attributes.getLocalName(i))
-      .append("=")
-      .append(attributes.getValue(i))
-      .append(";");
+        .append("=")
+        .append(attributes.getValue(i))
+        .append(";");
     }
     return serialized.toString();
   }

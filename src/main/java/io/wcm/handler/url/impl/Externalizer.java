@@ -105,7 +105,8 @@ final class Externalizer {
         path = new URI(path).getRawPath();
         // replace %2F back to / for better readability
         path = StringUtils.replace(path, "%2F", "/");
-      } catch (URISyntaxException ex) {
+      }
+      catch (URISyntaxException ex) {
         throw new RuntimeException("Sling map method returned invalid URI: " + path, ex);
       }
     }

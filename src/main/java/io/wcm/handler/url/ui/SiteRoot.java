@@ -40,7 +40,9 @@ import io.wcm.wcm.commons.util.Path;
  * Model for detecting site root pages.
  */
 @ProviderType
-@Model(adaptables = {SlingHttpServletRequest.class, Resource.class})
+@Model(adaptables = {
+    SlingHttpServletRequest.class, Resource.class
+})
 public final class SiteRoot {
 
   private Page siteRootPage;

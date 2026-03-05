@@ -90,7 +90,9 @@ public final class UrlHandlerImpl implements UrlHandler {
   }
 
   @Override
-  @SuppressWarnings({ "null", "unused" })
+  @SuppressWarnings({
+      "null", "unused"
+  })
   @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
   public String rewritePathToContext(@NotNull final Resource resource) {
     if (resource == null) {
@@ -105,7 +107,9 @@ public final class UrlHandlerImpl implements UrlHandler {
   }
 
   @Override
-  @SuppressWarnings({ "null", "unused" })
+  @SuppressWarnings({
+      "null", "unused"
+  })
   public String rewritePathToContext(@NotNull final Resource resource, @NotNull final Resource contextResource) {
     if (resource == null) {
       return null;
@@ -308,8 +312,8 @@ public final class UrlHandlerImpl implements UrlHandler {
                   queryParams.append('&');
                 }
                 queryParams.append(parameterName)
-                    .append('=')
-                    .append(value);
+                  .append('=')
+                  .append(value);
               }
             }
           }

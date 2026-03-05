@@ -89,8 +89,8 @@ class SuffixParserTest {
 
   private Resource createResource(String path, String resourceType) {
     return context.create().resource(path, ImmutableValueMap.builder()
-        .put(ResourceResolver.PROPERTY_RESOURCE_TYPE, resourceType)
-        .build());
+      .put(ResourceResolver.PROPERTY_RESOURCE_TYPE, resourceType)
+      .build());
   }
 
   @Test
@@ -348,6 +348,7 @@ class SuffixParserTest {
 
     // filter that only includes resources named "c"
     Predicate<Resource> cFilter = new Predicate<Resource>() {
+
       @Override
       public boolean test(Resource pResource) {
         return pResource.getPath().endsWith("/c");
@@ -389,6 +390,7 @@ class SuffixParserTest {
 
     // filter that only includes resources named "c"
     Predicate<Resource> cFilter = new Predicate<Resource>() {
+
       @Override
       public boolean test(Resource pResource) {
         return pResource.getPath().endsWith("/c");

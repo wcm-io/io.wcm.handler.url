@@ -58,11 +58,13 @@ public class UrlHandlerAdapterFactory implements AdapterFactory {
 
   // cache resolving of site root level per resource path
   private final Cache<String, SiteConfig> siteConfigCache = Caffeine.newBuilder()
-      .expireAfterWrite(5, TimeUnit.SECONDS)
-      .maximumSize(10000)
-      .build();
+    .expireAfterWrite(5, TimeUnit.SECONDS)
+    .maximumSize(10000)
+    .build();
 
-  @SuppressWarnings({ "unchecked", "null" })
+  @SuppressWarnings({
+      "unchecked", "null"
+  })
   @Override
   public <AdapterType> AdapterType getAdapter(Object adaptable, Class<AdapterType> type) {
     if (type == UrlHandlerConfig.class) {
@@ -111,18 +113,22 @@ public class UrlHandlerAdapterFactory implements AdapterFactory {
   private SiteConfig getSiteConfigForResourceCacheable(Resource contextResource) {
     final SiteConfig siteConfig = getSiteConfigForResource(contextResource);
     return new SiteConfig() {
+
       @Override
       public Class<? extends Annotation> annotationType() {
         return SiteConfig.class;
       }
+
       @Override
       public String siteUrl() {
         return siteConfig.siteUrl();
       }
+
       @Override
       public String siteUrlSecure() {
         return siteConfig.siteUrlSecure();
       }
+
       @Override
       public String siteUrlAuthor() {
         return siteConfig.siteUrlAuthor();
