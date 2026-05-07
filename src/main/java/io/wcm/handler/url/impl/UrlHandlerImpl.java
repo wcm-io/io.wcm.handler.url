@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.api.resource.Resource;
@@ -127,8 +128,8 @@ public final class UrlHandlerImpl implements UrlHandler {
     int siteRootLevelPath = urlHandlerConfig.getSiteRootLevel(resource);
     if ((contextPathParts.length <= siteRootLevelContextPath)
         || (pathParts.length <= siteRootLevelPath)
-        || !StringUtils.equals(contextPathParts[0], "content")
-        || !StringUtils.equals(pathParts[0], "content")) {
+        || !Strings.CS.equals(contextPathParts[0], "content")
+        || !Strings.CS.equals(pathParts[0], "content")) {
       return resource.getPath();
     }
 
@@ -162,7 +163,7 @@ public final class UrlHandlerImpl implements UrlHandler {
     }
 
     String externalizedUrl;
-    UrlMode mode = ObjectUtils.defaultIfNull(urlMode, urlHandlerConfig.getDefaultUrlMode());
+    UrlMode mode = ObjectUtils.getIfNull(urlMode, urlHandlerConfig.getDefaultUrlMode());
     if (urlHandlerConfig.isHostProvidedBySlingMapping() && !mode.isForceStripHostName()) {
       // apply sling mapping with host
       externalizedUrl = Externalizer.externalizeUrlWithHost(url, resolver, request);
@@ -200,14 +201,14 @@ public final class UrlHandlerImpl implements UrlHandler {
 
     // try to resolve the target resource from url/path if it was not given initially (only below /content)
     Resource resource = targetResource;
-    if (resource == null && StringUtils.startsWith(url, "/content/")) {
+    if (resource == null && Strings.CS.startsWith(url, "/content/")) {
       resource = resolver.resolve(url); // accept NonExistingResource as well
     }
 
     // check for reference to static resource from proxied client library
     String externalizedUrl = clientlibProxyRewriter.rewriteStaticResourcePath(url);
 
-    UrlMode mode = ObjectUtils.defaultIfNull(urlMode, urlHandlerConfig.getDefaultUrlMode());
+    UrlMode mode = ObjectUtils.getIfNull(urlMode, urlHandlerConfig.getDefaultUrlMode());
     if (urlHandlerConfig.isHostProvidedBySlingMapping() && !mode.isForceStripHostName()) {
       // apply sling mapping with host
       externalizedUrl = Externalizer.externalizeUrlWithHost(externalizedUrl, resolver, request);
@@ -244,7 +245,7 @@ public final class UrlHandlerImpl implements UrlHandler {
     StringBuilder selectorPart = new StringBuilder();
     if (StringUtils.isNotBlank(selector)) {
       // prepend delimiter to selector if required
-      if (!StringUtils.startsWith(selector, ".")) {
+      if (!Strings.CS.startsWith(selector, ".")) {
         selectorPart.append('.');
       }
       selectorPart.append(selector);
@@ -254,13 +255,13 @@ public final class UrlHandlerImpl implements UrlHandler {
     StringBuilder suffixPart = new StringBuilder();
     if (StringUtils.isNotBlank(suffix)) {
       // prepend delimiter to suffix if required and add extension
-      if (!StringUtils.startsWith(suffix, "/")) {
+      if (!Strings.CS.startsWith(suffix, "/")) {
         suffixPart = suffixPart.append("/");
       }
       suffixPart.append(suffix);
 
       // if suffix does not contain a file extension add main file extension
-      if (!StringUtils.contains(suffix, ".")) {
+      if (!Strings.CS.contains(suffix, ".")) {
         suffixPart.append(extensionPart);
       }
 
@@ -345,7 +346,7 @@ public final class UrlHandlerImpl implements UrlHandler {
 
     // prepend "#" for anchor if not present
     if (StringUtils.isNotBlank(fragment)) {
-      if (!StringUtils.startsWith(fragment, "#")) {
+      if (!Strings.CS.startsWith(fragment, "#")) {
         urlBuilder.append('#');
       }
       urlBuilder.append(fragment);

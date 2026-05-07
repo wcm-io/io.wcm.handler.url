@@ -19,7 +19,7 @@
  */
 package io.wcm.handler.url.rewriter.impl;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -35,7 +35,7 @@ class ComparableAttributes extends AttributesImpl {
     if (!(obj instanceof Attributes)) {
       return false;
     }
-    return StringUtils.equals(serializedString(this), serializedString((Attributes)obj));
+    return Strings.CS.equals(serializedString(this), serializedString((Attributes)obj));
   }
 
   @Override

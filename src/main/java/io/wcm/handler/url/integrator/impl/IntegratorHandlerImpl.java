@@ -24,6 +24,7 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -160,7 +161,7 @@ public final class IntegratorHandlerImpl implements IntegratorHandler {
     String modeString = properties.get(IntegratorNameConstants.PN_INTEGRATOR_MODE, String.class);
     if (StringUtils.isNotEmpty(modeString)) {
       for (IntegratorMode candidate : integratorModes) {
-        if (StringUtils.equals(modeString, candidate.getId())) {
+        if (Strings.CS.equals(modeString, candidate.getId())) {
           mode = candidate;
           break;
         }

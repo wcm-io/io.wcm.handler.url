@@ -22,6 +22,7 @@ package io.wcm.handler.url.impl.modes;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -86,7 +87,7 @@ public final class DefaultUrlMode extends AbstractUrlMode {
     ResourceResolver resourceResolver = currentResource.getResourceResolver();
     String currentSiteRoot = getRootPath(currentPage.getPath(), urlHandlerConfig.getSiteRootLevel(currentResource), resourceResolver);
     String pathSiteRoot = getRootPath(targetResource.getPath(), urlHandlerConfig.getSiteRootLevel(targetResource), resourceResolver);
-    boolean notInCurrentSite = !StringUtils.equals(currentSiteRoot, pathSiteRoot);
+    boolean notInCurrentSite = !Strings.CS.equals(currentSiteRoot, pathSiteRoot);
 
     if (notInCurrentSite) {
       UrlConfig targetUrlConfig = new UrlConfig(targetResource);
@@ -108,7 +109,7 @@ public final class DefaultUrlMode extends AbstractUrlMode {
     String rootPath = Path.getAbsoluteParent(path, rootLevel, resourceResolver);
 
     // strip off everything after first "." - root path may be passed with selectors/extension which is not relevant
-    if (StringUtils.contains(rootPath, ".")) {
+    if (Strings.CS.contains(rootPath, ".")) {
       rootPath = StringUtils.substringBefore(rootPath, ".");
     }
 

@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.jetbrains.annotations.NotNull;
@@ -104,7 +105,7 @@ final class Externalizer {
       try {
         path = new URI(path).getRawPath();
         // replace %2F back to / for better readability
-        path = StringUtils.replace(path, "%2F", "/");
+        path = Strings.CS.replace(path, "%2F", "/");
       }
       catch (URISyntaxException ex) {
         throw new RuntimeException("Sling map method returned invalid URI: " + path, ex);
@@ -152,9 +153,9 @@ final class Externalizer {
 
     // url-encode path
     path = Escape.urlEncode(path);
-    path = StringUtils.replace(path, "+", "%20");
+    path = Strings.CS.replace(path, "+", "%20");
     // replace %2F back to / for better readability
-    path = StringUtils.replace(path, "%2F", "/");
+    path = Strings.CS.replace(path, "%2F", "/");
 
     // build full URL again
     return path + (urlRemainder != null ? urlRemainder : "");
@@ -184,7 +185,7 @@ final class Externalizer {
    * @return true if url seems to be a path than needs externaliziation
    */
   public static boolean isExternalizable(@NotNull String url) {
-    return StringUtils.startsWith(url, "/");
+    return Strings.CS.startsWith(url, "/");
   }
 
   private static final String MANGLED_NAMESPACE_PREFIX = "/_";

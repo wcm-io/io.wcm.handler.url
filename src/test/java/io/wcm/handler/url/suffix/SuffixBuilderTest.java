@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
@@ -453,8 +454,8 @@ class SuffixBuilderTest {
 
     // ensure that no slash, not single nor double-escaped found in suffix
     assertTrue(StringUtils.contains(suffix, SUFFIX_PART_DELIMITER), "un-escaped slash found"); // "/" is suffix part delimiter
-    assertFalse(StringUtils.contains(suffix, URL_ENCODED_SLASH), "single-escaped slash found");
-    assertFalse(StringUtils.contains(suffix, DOUBLE_URL_ENCODED_SLASH), "double-escaped slash found");
+    assertFalse(Strings.CS.contains(suffix, URL_ENCODED_SLASH), "single-escaped slash found");
+    assertFalse(Strings.CS.contains(suffix, DOUBLE_URL_ENCODED_SLASH), "double-escaped slash found");
 
     // create SuffixHelper with that suffix, decode it and simulate request to the base page
     String suffixWithExtension = "/" + suffix + ".html";

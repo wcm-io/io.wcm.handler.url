@@ -36,6 +36,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.api.resource.PersistenceException;
@@ -815,10 +816,10 @@ class UrlHandlerImplTest {
           mapRequest = null;
           path = (String)invocation.getArguments()[0];
         }
-        if (StringUtils.startsWith(path, "/content/unittest/de_test/brand/")) {
+        if (Strings.CS.startsWith(path, "/content/unittest/de_test/brand/")) {
           path = "/" + StringUtils.substringAfter(path, "/content/unittest/de_test/brand/");
         }
-        if (StringUtils.startsWith(path, "/content/")) {
+        if (Strings.CS.startsWith(path, "/content/")) {
           path = "/" + StringUtils.substringAfter(path, "/content/");
         }
         if (mapRequest != null) {
