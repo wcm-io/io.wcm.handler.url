@@ -21,7 +21,6 @@ package io.wcm.handler.url.integrator.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.sling.api.adapter.Adaptable;
@@ -129,7 +128,7 @@ class IntegratorHandlerImplTest {
   void testIntegratorPageNull() {
     context.currentPage((Page)null);
     IntegratorHandler underTest = adaptable().adaptTo(IntegratorHandler.class);
-    assertNull(underTest.getIntegratorMode());
+    assertEquals(IntegratorModes.SIMPLE, underTest.getIntegratorMode());
     assertEquals(IntegratorHandler.SELECTOR_INTEGRATORTEMPLATE, underTest.getIntegratorTemplateSelector());
   }
 
