@@ -29,6 +29,8 @@ import org.apache.sling.api.adapter.AdapterFactory;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -86,7 +88,7 @@ public class UrlHandlerAdapterFactory implements AdapterFactory {
     return null;
   }
 
-  private SiteConfig getSiteConfigForSiteRoot(Resource contextResource) {
+  private @Nullable SiteConfig getSiteConfigForSiteRoot(Resource contextResource) {
     if (contextResource == null) {
       return null;
     }
@@ -100,6 +102,9 @@ public class UrlHandlerAdapterFactory implements AdapterFactory {
     // get site config for site root resource and cache the result (for a short time)
     return siteConfigCache.get(contextRootPath, path -> {
       Resource siteRootResource = contextResource.getResourceResolver().getResource(contextRootPath);
+      if (siteRootResource == null) {
+        return null;
+      }
       return getSiteConfigForResourceCacheable(siteRootResource);
     });
   }
@@ -110,7 +115,7 @@ public class UrlHandlerAdapterFactory implements AdapterFactory {
    * @param contextResource Context resource
    * @return Cacheable site configuration
    */
-  private SiteConfig getSiteConfigForResourceCacheable(Resource contextResource) {
+  private SiteConfig getSiteConfigForResourceCacheable(@NotNull Resource contextResource) {
     SiteConfig siteConfig = getSiteConfigForResource(contextResource);
     String siteUrl = siteConfig.siteUrl();
     String siteUrlSecure = siteConfig.siteUrlSecure();
@@ -141,7 +146,7 @@ public class UrlHandlerAdapterFactory implements AdapterFactory {
   }
 
   @SuppressWarnings("java:S112") // allow runtime exception
-  private SiteConfig getSiteConfigForResource(Resource contextResource) {
+  private SiteConfig getSiteConfigForResource(@NotNull Resource contextResource) {
     ConfigurationBuilder configurationBuilder = contextResource.adaptTo(ConfigurationBuilder.class);
     if (configurationBuilder == null) {
       throw new RuntimeException("No configuration builder.");
