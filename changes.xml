@@ -28,6 +28,9 @@
       <action type="update" dev="sseifert">
         Switch to AEM 6.5.24 as minimum version (also compatible with AEM 6.6.2 / AEM 6.5 LTS SP2 and AEMaaCS).
       </action>
+      <action type="fix" dev="joerghoh" issue="45">
+        Fix: UrlHandlerAdapterFactory can retain a large amount of memory.
+      </action>
     </release>
 
     <release version="2.1.4" date="2025-12-15">

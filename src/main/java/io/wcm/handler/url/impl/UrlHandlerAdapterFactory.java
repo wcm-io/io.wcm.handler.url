@@ -111,7 +111,10 @@ public class UrlHandlerAdapterFactory implements AdapterFactory {
    * @return Cacheable site configuration
    */
   private SiteConfig getSiteConfigForResourceCacheable(Resource contextResource) {
-    final SiteConfig siteConfig = getSiteConfigForResource(contextResource);
+    SiteConfig siteConfig = getSiteConfigForResource(contextResource);
+    String siteUrl = siteConfig.siteUrl();
+    String siteUrlSecure = siteConfig.siteUrlSecure();
+    String siteUrlAuthor = siteConfig.siteUrlAuthor();
     return new SiteConfig() {
 
       @Override
@@ -121,17 +124,17 @@ public class UrlHandlerAdapterFactory implements AdapterFactory {
 
       @Override
       public String siteUrl() {
-        return siteConfig.siteUrl();
+        return siteUrl;
       }
 
       @Override
       public String siteUrlSecure() {
-        return siteConfig.siteUrlSecure();
+        return siteUrlSecure;
       }
 
       @Override
       public String siteUrlAuthor() {
-        return siteConfig.siteUrlAuthor();
+        return siteUrlAuthor;
       }
 
     };
