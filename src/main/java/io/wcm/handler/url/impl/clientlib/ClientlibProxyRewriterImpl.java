@@ -19,11 +19,9 @@
  */
 package io.wcm.handler.url.impl.clientlib;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -36,7 +34,7 @@ import org.slf4j.LoggerFactory;
 @Component(service = ClientlibProxyRewriter.class, immediate = true)
 public class ClientlibProxyRewriterImpl implements ClientlibProxyRewriter {
 
-  private static final Pattern STATIC_RESOURCE_PATH_PATTERN = Pattern.compile("^(/(apps|libs)/.*)/resources/.*$");
+  private static final String RESOURCES_PATH_SEGMENT = "/resources/";
 
   private static final Logger log = LoggerFactory.getLogger(ClientlibProxyRewriterImpl.class);
 
@@ -68,15 +66,29 @@ public class ClientlibProxyRewriterImpl implements ClientlibProxyRewriter {
 
   @Override
   public @NotNull String rewriteStaticResourcePath(@NotNull String path) {
-    Matcher matcher = STATIC_RESOURCE_PATH_PATTERN.matcher(path);
-    if (matcher.matches()) {
-      String clientlibPath = matcher.group(1);
-      boolean clientlibProxyMode = getClientlibPathCache().isClientlibWithAllowProxy(clientlibPath);
-      if (clientlibProxyMode) {
-        return rewriteClientlibProxyPath(path);
-      }
+    String clientlibPath = getClientlibPath(path);
+    if (clientlibPath != null && getClientlibPathCache().isClientlibWithAllowProxy(clientlibPath)) {
+      return rewriteClientlibProxyPath(path);
     }
     return path;
+  }
+
+  /**
+   * Extracts the client library path from a static resource path located below a client library's
+   * "resources" folder. Example: for "/apps/myapp/clientlibs/clientlib1/resources/images/img.png"
+   * the returned client library path is "/apps/myapp/clientlibs/clientlib1".
+   * @param path Static resource path
+   * @return Client library path, or null if the path is not a valid /apps or /libs resource path
+   */
+  private static @Nullable String getClientlibPath(@NotNull String path) {
+    if (path.startsWith("/apps/") || path.startsWith("/libs/")) {
+      int resourcesIndex = path.lastIndexOf(RESOURCES_PATH_SEGMENT);
+      // require at least the "/apps/" or "/libs/" prefix before the "/resources/" segment
+      if (resourcesIndex >= "/apps/".length()) {
+        return path.substring(0, resourcesIndex);
+      }
+    }
+    return null;
   }
 
   private String rewriteClientlibProxyPath(String path) {
