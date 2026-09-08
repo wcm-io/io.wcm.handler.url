@@ -34,7 +34,7 @@
       <action type="fix" dev="sseifert" issue="47">
         Improve null safeness on some code paths.
       </action>
-      <action type="fix" dev="sseifert">
+      <action type="fix" dev="sseifert" issue="48">
         ClientlibProxyRewriterImpl: Replace regex that may cause non-linear backtracking.
       </action>
     </release>
