@@ -41,9 +41,9 @@ class SiteRootDetectorImplTest {
   private static final int ROOT_LEVEL = 2;
 
   private final AemContext context = new AemContextBuilder()
-      .plugin(CACONFIG)
-      .plugin(WCMIO_SLING, WCMIO_WCM, WCMIO_CACONFIG)
-      .build();
+    .plugin(CACONFIG)
+    .plugin(WCMIO_SLING, WCMIO_WCM, WCMIO_CACONFIG)
+    .build();
 
   private SiteRootDetector underTest;
 

@@ -21,13 +21,13 @@ package io.wcm.handler.url.testcontext;
 
 import java.util.List;
 
-import io.wcm.handler.url.VanityMode;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.Resource;
 
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
 
+import io.wcm.handler.url.VanityMode;
 import io.wcm.handler.url.integrator.IntegratorMode;
 import io.wcm.handler.url.integrator.IntegratorModes;
 import io.wcm.handler.url.spi.UrlHandlerConfig;
@@ -55,13 +55,13 @@ public class DummyUrlHandlerConfig extends UrlHandlerConfig {
   @Override
   public boolean isSecure(Page page) {
     String templatePath = page.getProperties().get(NameConstants.PN_TEMPLATE, String.class);
-    return StringUtils.equals(templatePath, DummyAppTemplate.CONTENT_SECURE.getTemplatePath());
+    return Strings.CS.equals(templatePath, DummyAppTemplate.CONTENT_SECURE.getTemplatePath());
   }
 
   @Override
   public boolean isIntegrator(Page page) {
     String templatePath = page.getProperties().get(NameConstants.PN_TEMPLATE, String.class);
-    return StringUtils.equals(templatePath, DummyAppTemplate.INTEGRATOR.getTemplatePath());
+    return Strings.CS.equals(templatePath, DummyAppTemplate.INTEGRATOR.getTemplatePath());
   }
 
   @Override

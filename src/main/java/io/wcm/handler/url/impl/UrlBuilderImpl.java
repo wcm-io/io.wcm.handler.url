@@ -19,6 +19,7 @@
  */
 package io.wcm.handler.url.impl;
 
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -145,9 +146,9 @@ final class UrlBuilderImpl implements UrlBuilder {
 
   private String build(boolean externalize) {
     String pathToUse = path;
-    VanityMode vanityModeToUse = ObjectUtils.defaultIfNull(vanityMode, urlHandler.getDefaultVanityMode());
+    VanityMode vanityModeToUse = ObjectUtils.getIfNull(vanityMode, urlHandler.getDefaultVanityMode());
     if (page != null && (vanityModeToUse == VanityMode.ALWAYS || (externalize && vanityModeToUse == VanityMode.EXTERNALIZE))) {
-      pathToUse = StringUtils.defaultString(page.getVanityUrl(), path);
+      pathToUse = Objects.toString(page.getVanityUrl(), path);
     }
 
     String url = urlHandler.buildUrl(pathToUse, selectors, extension, suffix, disableSuffixSelector);

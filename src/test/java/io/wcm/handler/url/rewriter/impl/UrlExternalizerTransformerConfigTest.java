@@ -35,14 +35,14 @@ class UrlExternalizerTransformerConfigTest {
   @BeforeEach
   void setUp() {
     underTest = new UrlExternalizerTransformerConfig(ImmutableValueMap.builder()
-        .put(UrlExternalizerTransformerConfig.PN_REWRITE_ELEMENTS, new String[] {
-            "element1:attr1",
-            "element2:attr2",
-            "",
-            null,
-            "element3",
-            "element1:attr4"
-        }).build());
+      .put(UrlExternalizerTransformerConfig.PN_REWRITE_ELEMENTS, new String[] {
+          "element1:attr1",
+          "element2:attr2",
+          "",
+          null,
+          "element3",
+          "element1:attr4"
+      }).build());
   }
 
   @Test

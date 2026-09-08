@@ -22,6 +22,7 @@ package io.wcm.handler.url.impl.modes;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.api.resource.Resource;
 import org.jetbrains.annotations.NotNull;
@@ -118,7 +119,7 @@ public final class FullUrlProtocolRelativeUrlMode extends AbstractUrlMode {
     if (StringUtils.isEmpty(pPrefix)) {
       return null;
     }
-    int index = StringUtils.indexOf(pPrefix, "://");
+    int index = Strings.CS.indexOf(pPrefix, "://");
     if (index >= 0) {
       return pPrefix.substring(index + 1);
     }

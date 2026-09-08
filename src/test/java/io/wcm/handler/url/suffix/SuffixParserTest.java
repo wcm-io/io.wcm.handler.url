@@ -89,8 +89,8 @@ class SuffixParserTest {
 
   private Resource createResource(String path, String resourceType) {
     return context.create().resource(path, ImmutableValueMap.builder()
-        .put(ResourceResolver.PROPERTY_RESOURCE_TYPE, resourceType)
-        .build());
+      .put(ResourceResolver.PROPERTY_RESOURCE_TYPE, resourceType)
+      .build());
   }
 
   @Test
@@ -347,12 +347,7 @@ class SuffixParserTest {
     Resource targetResource = createResource("/content/a/jcr:content/b/c", resourceType);
 
     // filter that only includes resources named "c"
-    Predicate<Resource> cFilter = new Predicate<Resource>() {
-      @Override
-      public boolean test(Resource pResource) {
-        return pResource.getPath().endsWith("/c");
-      }
-    };
+    Predicate<Resource> cFilter = pResource -> pResource.getPath().endsWith("/c");
 
     // get the resource by path (relative to the page) using the "c" filter
     SuffixParser parser = getParserWithIncomingSuffix(ESCAPED_SLASH + "b" + ESCAPED_SLASH + "c");
@@ -388,12 +383,7 @@ class SuffixParserTest {
     Resource resourceCD = createResource(basePath + "/c/d", resourceType);
 
     // filter that only includes resources named "c"
-    Predicate<Resource> cFilter = new Predicate<Resource>() {
-      @Override
-      public boolean test(Resource pResource) {
-        return pResource.getPath().endsWith("/c");
-      }
-    };
+    Predicate<Resource> cFilter = pResource -> pResource.getPath().endsWith("/c");
 
     // get these resources from suffix
     SuffixParser parser = getParserWithIncomingSuffix(ESCAPED_SLASH + "b" + ESCAPED_SLASH + "c"

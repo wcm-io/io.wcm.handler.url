@@ -52,17 +52,18 @@ public final class AppAemContext {
 
   public static AemContext newAemContext() {
     return new AemContextBuilder()
-        .plugin(CACONFIG)
-        .plugin(WCMIO_SLING, WCMIO_WCM, WCMIO_CACONFIG)
-        .afterSetUp(SETUP_CALLBACK)
-        .resourceResolverType(ResourceResolverType.JCR_MOCK)
-        .build();
+      .plugin(CACONFIG)
+      .plugin(WCMIO_SLING, WCMIO_WCM, WCMIO_CACONFIG)
+      .afterSetUp(SETUP_CALLBACK)
+      .resourceResolverType(ResourceResolverType.JCR_MOCK)
+      .build();
   }
 
   /**
    * Custom set up rules required in all unit tests.
    */
   private static final AemContextCallback SETUP_CALLBACK = new AemContextCallback() {
+
     @Override
     public void execute(@NotNull AemContext context) throws IOException {
 

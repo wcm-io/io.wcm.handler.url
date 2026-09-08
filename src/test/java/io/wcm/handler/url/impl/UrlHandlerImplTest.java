@@ -36,6 +36,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.api.resource.PersistenceException;
@@ -46,7 +47,6 @@ import org.apache.sling.servlethelpers.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import com.day.cq.wcm.api.Page;
@@ -406,7 +406,7 @@ class UrlHandlerImplTest {
   void testExternalizeLinkUrlHostBySlingMapping() {
     // create more pages to simulate internal link
     Page targetPage = context.create().page("/content/unittest/de_test/brand/de/section2/page2a",
-            DummyAppTemplate.CONTENT.getTemplatePath());
+        DummyAppTemplate.CONTENT.getTemplatePath());
 
     // set config flag
     ((DummyUrlHandlerConfig)context.getService(UrlHandlerConfig.class)).setHostProvidedBySlingMapping(true);
@@ -416,7 +416,7 @@ class UrlHandlerImplTest {
 
     UrlHandler urlHandler = AdaptTo.notNull(request, UrlHandler.class);
     assertEquals("http://www.domain.com/context/content/unittest/de_test/brand/de/section2/page2a.html",
-            externalizeLinkUrl(urlHandler, targetPage.getPath() + ".html", null));
+        externalizeLinkUrl(urlHandler, targetPage.getPath() + ".html", null));
   }
 
   @Test
@@ -488,7 +488,7 @@ class UrlHandlerImplTest {
         externalizeResourceUrl(urlHandler, targetPage.getContentResource().getPath() + ".png"));
     assertEquals("/content/unittest/de_test/brand/de/section2/page2a/_jcr_content.png",
         urlHandler.get(context.resourceResolver().getResource("/content/unittest/de_test/brand/de/section2/page2a/jcr:content"))
-        .extension("png").buildExternalResourceUrl());
+          .extension("png").buildExternalResourceUrl());
     assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/section2/page2a/_jcr_content.png",
         externalizeResourceUrl(urlHandler, targetPage.getContentResource().getPath() + ".png", UrlModes.FULL_URL));
 
@@ -554,7 +554,7 @@ class UrlHandlerImplTest {
   void testExternalizeResourceUrlHostBySlingMapping() {
     // create more pages to simulate internal link
     context.create().page("/content/unittest/de_test/brand/de/section2/page2a",
-            DummyAppTemplate.CONTENT.getTemplatePath());
+        DummyAppTemplate.CONTENT.getTemplatePath());
 
     // set config flag
     ((DummyUrlHandlerConfig)context.getService(UrlHandlerConfig.class)).setHostProvidedBySlingMapping(true);
@@ -659,7 +659,7 @@ class UrlHandlerImplTest {
 
     assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/path%20with/spaces.gif",
         urlHandler.get("/content/unittest/de_test/brand/de/path with/spaces")
-        .extension("gif").urlMode(UrlModes.FULL_URL).buildExternalResourceUrl());
+          .extension("gif").urlMode(UrlModes.FULL_URL).buildExternalResourceUrl());
   }
 
   @Test
@@ -668,7 +668,7 @@ class UrlHandlerImplTest {
 
     assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/path%C3%A4%C3%B6%C3%BC%C3%9F%E2%82%AC.gif",
         urlHandler.get("/content/unittest/de_test/brand/de/pathäöüß€")
-        .extension("gif").urlMode(UrlModes.FULL_URL).buildExternalResourceUrl());
+          .extension("gif").urlMode(UrlModes.FULL_URL).buildExternalResourceUrl());
   }
 
   @Test
@@ -801,35 +801,32 @@ class UrlHandlerImplTest {
    */
   private static MockSlingHttpServletRequest applySimpleMapping(SlingHttpServletRequest request) {
     ResourceResolver spyResolver = spy(request.getResourceResolver());
-    Answer<String> mappingAnswer = new Answer<String>() {
-      @Override
-      public String answer(InvocationOnMock invocation) {
-        SlingHttpServletRequest mapRequest;
-        String path;
-        if (invocation.getArguments()[0] instanceof SlingHttpServletRequest) {
-          mapRequest = (SlingHttpServletRequest)invocation.getArguments()[0];
-          path = (String)invocation.getArguments()[1];
-        }
-        else {
-          mapRequest = null;
-          path = (String)invocation.getArguments()[0];
-        }
-        if (StringUtils.startsWith(path, "/content/unittest/de_test/brand/")) {
-          path = "/" + StringUtils.substringAfter(path, "/content/unittest/de_test/brand/");
-        }
-        if (StringUtils.startsWith(path, "/content/")) {
-          path = "/" + StringUtils.substringAfter(path, "/content/");
-        }
-        if (mapRequest != null) {
-          path = StringUtils.defaultString(mapRequest.getContextPath()) + path;
-        }
-        path = Externalizer.mangleNamespaces(path);
-        try {
-          return URLEncoder.encode(path, StandardCharsets.UTF_8.name());
-        }
-        catch (UnsupportedEncodingException ex) {
-          throw new RuntimeException(ex);
-        }
+    Answer<String> mappingAnswer = invocation -> {
+      SlingHttpServletRequest mapRequest;
+      String path;
+      if (invocation.getArguments()[0] instanceof SlingHttpServletRequest) {
+        mapRequest = (SlingHttpServletRequest)invocation.getArguments()[0];
+        path = (String)invocation.getArguments()[1];
+      }
+      else {
+        mapRequest = null;
+        path = (String)invocation.getArguments()[0];
+      }
+      if (Strings.CS.startsWith(path, "/content/unittest/de_test/brand/")) {
+        path = "/" + StringUtils.substringAfter(path, "/content/unittest/de_test/brand/");
+      }
+      if (Strings.CS.startsWith(path, "/content/")) {
+        path = "/" + StringUtils.substringAfter(path, "/content/");
+      }
+      if (mapRequest != null) {
+        path = StringUtils.defaultString(mapRequest.getContextPath()) + path;
+      }
+      path = Externalizer.mangleNamespaces(path);
+      try {
+        return URLEncoder.encode(path, StandardCharsets.UTF_8.name());
+      }
+      catch (UnsupportedEncodingException ex) {
+        throw new RuntimeException(ex);
       }
     };
     when(spyResolver.map(anyString())).thenAnswer(mappingAnswer);
@@ -845,12 +842,7 @@ class UrlHandlerImplTest {
    */
   private static MockSlingHttpServletRequest applyHostNameMapping(SlingHttpServletRequest request) {
     ResourceResolver spyResolver = spy(request.getResourceResolver());
-    Answer<String> mappingAnswer = new Answer<String>() {
-      @Override
-      public String answer(InvocationOnMock invocation) {
-        return "http://www.domain.com/context" + (String)invocation.getArguments()[1];
-      }
-    };
+    Answer<String> mappingAnswer = invocation -> "http://www.domain.com/context" + (String)invocation.getArguments()[1];
     when(spyResolver.map(any(SlingHttpServletRequest.class), anyString())).thenAnswer(mappingAnswer);
     MockSlingHttpServletRequest newRequest = new MockSlingHttpServletRequest(spyResolver);
     newRequest.setResource(request.getResource());
@@ -899,7 +891,7 @@ class UrlHandlerImplTest {
     ((DummyUrlHandlerConfig)context.getService(UrlHandlerConfig.class)).setVanityMode(VanityMode.ALWAYS);
 
     UrlBuilder urlBuilder = urlHandler.get(page)
-        .extension("html");
+      .extension("html");
     assertEquals("/content/unittest/de_test/brand/de/vanity-path.html", urlBuilder.build());
     assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/vanity-path.html", urlBuilder.buildExternalLinkUrl());
   }
@@ -914,10 +906,10 @@ class UrlHandlerImplTest {
 
     UrlHandler urlHandler = AdaptTo.notNull(adaptable(), UrlHandler.class);
     UrlBuilder urlBuilder = urlHandler.get(page)
-        .extension("html")
-        .vanityMode(VanityMode.ALWAYS);
+      .extension("html")
+      .vanityMode(VanityMode.ALWAYS);
     assertEquals("/content/unittest/de_test/brand/de/vanity-path.html", urlBuilder.build());
-    assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/vanity-path.html",urlBuilder.buildExternalLinkUrl());
+    assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/vanity-path.html", urlBuilder.buildExternalLinkUrl());
 
   }
 
@@ -933,9 +925,9 @@ class UrlHandlerImplTest {
     ((DummyUrlHandlerConfig)context.getService(UrlHandlerConfig.class)).setVanityMode(VanityMode.EXTERNALIZE);
 
     UrlBuilder urlBuilder = urlHandler.get(page)
-        .extension("html");
-    assertEquals("/content/unittest/de_test/brand/de/section/original-page.html",urlBuilder.build());
-    assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/vanity-path.html",urlBuilder.buildExternalLinkUrl());
+      .extension("html");
+    assertEquals("/content/unittest/de_test/brand/de/section/original-page.html", urlBuilder.build());
+    assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/vanity-path.html", urlBuilder.buildExternalLinkUrl());
   }
 
   @Test
@@ -949,10 +941,10 @@ class UrlHandlerImplTest {
     UrlHandler urlHandler = AdaptTo.notNull(adaptable(), UrlHandler.class);
 
     UrlBuilder urlBuilder = urlHandler.get(page)
-        .vanityMode(VanityMode.EXTERNALIZE)
-        .extension("html");
-    assertEquals("/content/unittest/de_test/brand/de/section/original-page.html",urlBuilder.build());
-    assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/vanity-path.html",urlBuilder.buildExternalLinkUrl());
+      .vanityMode(VanityMode.EXTERNALIZE)
+      .extension("html");
+    assertEquals("/content/unittest/de_test/brand/de/section/original-page.html", urlBuilder.build());
+    assertEquals("http://de.dummysite.org/content/unittest/de_test/brand/de/vanity-path.html", urlBuilder.buildExternalLinkUrl());
   }
 
 }

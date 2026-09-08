@@ -32,6 +32,7 @@ import io.wcm.handler.url.UrlModes;
 class UrlHandlerConfigTest {
 
   private UrlHandlerConfig underTest = new UrlHandlerConfig() {
+
     @Override
     public int getSiteRootLevel(Resource contextResource) {
       return 0;

@@ -19,7 +19,7 @@
  */
 package io.wcm.handler.url.integrator;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -84,7 +84,7 @@ public final class IntegratorPlaceholder {
    * @return Placeholder name
    */
   private static @NotNull String getPlaceholderName(@NotNull String placeholder) {
-    return StringUtils.remove(placeholder, "###");
+    return Strings.CS.remove(placeholder, "###");
   }
 
 }

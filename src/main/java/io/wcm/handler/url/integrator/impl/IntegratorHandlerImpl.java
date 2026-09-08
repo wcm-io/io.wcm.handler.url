@@ -24,6 +24,7 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -36,9 +37,9 @@ import org.jetbrains.annotations.Nullable;
 
 import com.day.cq.wcm.api.Page;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.wcm.handler.url.integrator.IntegratorHandler;
 import io.wcm.handler.url.integrator.IntegratorMode;
+import io.wcm.handler.url.integrator.IntegratorModes;
 import io.wcm.handler.url.integrator.IntegratorNameConstants;
 import io.wcm.handler.url.integrator.IntegratorProtocol;
 import io.wcm.handler.url.spi.UrlHandlerConfig;
@@ -146,19 +147,18 @@ public final class IntegratorHandlerImpl implements IntegratorHandler {
 
 
   /**
-   * Read integrator mode from content container. Defaults to first integrator mode defined.
+   * Read integrator mode from content container. Defaults to first integrator mode defined,
+   * or to {@link IntegratorModes#SIMPLE} if no integrator modes are configured.
    * @param properties Content container
    * @return Integrator mode
    */
-  @SuppressWarnings({ "null", "java:S2637" })
-  @SuppressFBWarnings("NP_NONNULL_RETURN_VIOLATION")
   private @NotNull IntegratorMode getIntegratorMode(ValueMap properties) {
     IntegratorMode mode = null;
     Collection<IntegratorMode> integratorModes = urlHandlerConfig.getIntegratorModes();
     String modeString = properties.get(IntegratorNameConstants.PN_INTEGRATOR_MODE, String.class);
     if (StringUtils.isNotEmpty(modeString)) {
       for (IntegratorMode candidate : integratorModes) {
-        if (StringUtils.equals(modeString, candidate.getId())) {
+        if (Strings.CS.equals(modeString, candidate.getId())) {
           mode = candidate;
           break;
         }
@@ -167,6 +167,10 @@ public final class IntegratorHandlerImpl implements IntegratorHandler {
     // fallback to first mode defined in configuration
     if (mode == null && !integratorModes.isEmpty()) {
       mode = integratorModes.iterator().next();
+    }
+    // fallback to simple mode if no integrator modes are configured
+    if (mode == null) {
+      mode = IntegratorModes.SIMPLE;
     }
     return mode;
   }

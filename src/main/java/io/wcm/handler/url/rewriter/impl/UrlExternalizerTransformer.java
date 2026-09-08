@@ -23,6 +23,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.rewriter.ProcessingComponentConfiguration;
 import org.apache.sling.rewriter.ProcessingContext;
 import org.apache.sling.rewriter.Transformer;
@@ -118,7 +119,7 @@ class UrlExternalizerTransformer implements Transformer {
       }
     }
 
-    if (StringUtils.equals(url, rewrittenUrl)) {
+    if (Strings.CS.equals(url, rewrittenUrl)) {
       log.debug("Rewrite element {}: Skip - URL is already externalized: {}", name, url);
       contentHandler.startElement(nsUri, name, raw, attrs);
       return;

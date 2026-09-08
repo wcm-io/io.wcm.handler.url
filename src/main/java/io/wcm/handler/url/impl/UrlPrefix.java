@@ -22,6 +22,7 @@ package io.wcm.handler.url.impl;
 import java.util.Enumeration;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.adapter.Adaptable;
 import org.jetbrains.annotations.NotNull;
@@ -60,9 +61,9 @@ final class UrlPrefix {
    */
   static @Nullable String applyAutoDetection(@Nullable String configuredUrlPrefix, @NotNull Adaptable adaptable) {
     String urlPrefix = configuredUrlPrefix;
-    if (StringUtils.contains(configuredUrlPrefix, AUTO_DETECTION)) {
+    if (Strings.CS.contains(configuredUrlPrefix, AUTO_DETECTION)) {
       // remove auto marker (detection might not be possible if adaptable is not a request)
-      urlPrefix = StringUtils.trimToNull(StringUtils.remove(configuredUrlPrefix, AUTO_DETECTION));
+      urlPrefix = StringUtils.trimToNull(Strings.CS.remove(configuredUrlPrefix, AUTO_DETECTION));
       // auto-detect based on request
       if (adaptable instanceof SlingHttpServletRequest) {
         SlingHttpServletRequest request = (SlingHttpServletRequest)adaptable;
@@ -106,7 +107,7 @@ final class UrlPrefix {
     // this should work for AEMaaCS publish
     String host = request.getHeader(HTTP_HEADER_HOST);
     String forwardedSsl = request.getHeader(HTTP_HEADER_X_FORWARDED_SSL);
-    if (StringUtils.isNotEmpty(host) && StringUtils.equalsIgnoreCase(forwardedSsl, VALUE_ON)) {
+    if (StringUtils.isNotEmpty(host) && Strings.CI.equals(forwardedSsl, VALUE_ON)) {
       return "https://" + host;
     }
 

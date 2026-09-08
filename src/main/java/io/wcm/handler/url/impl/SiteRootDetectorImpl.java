@@ -50,9 +50,9 @@ public class SiteRootDetectorImpl implements SiteRootDetector {
 
   // cache resolving of site root level per resource path
   private final Cache<String, Integer> cache = Caffeine.newBuilder()
-      .expireAfterWrite(1, TimeUnit.MINUTES)
-      .maximumSize(10000)
-      .build();
+    .expireAfterWrite(1, TimeUnit.MINUTES)
+    .maximumSize(10000)
+    .build();
 
   @Override
   public int getSiteRootLevel(@Nullable Resource contextResource) {

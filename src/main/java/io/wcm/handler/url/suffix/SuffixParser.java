@@ -286,7 +286,8 @@ public final class SuffixParser {
   }
 
   /**
-   * Parse the suffix as page paths, return the first page from the suffix (relativ to the current page) that matches the given filter.
+   * Parse the suffix as page paths, return the first page from the suffix (relativ to the current page) that matches
+   * the given filter.
    *
    * @param filter a filter that selects only the page you're interested in.
    * @return the page or null if no such page was selected by suffix
@@ -367,10 +368,10 @@ public final class SuffixParser {
 
     // convert resources back to pages
     return resources.stream()
-        .filter(Objects::nonNull)
-        .map(resource -> resource.adaptTo(Page.class))
-        .filter(Objects::nonNull)
-        .collect(Collectors.toList());
+      .filter(Objects::nonNull)
+      .map(resource -> resource.adaptTo(Page.class))
+      .filter(Objects::nonNull)
+      .collect(Collectors.toList());
   }
 
   @SuppressWarnings("java:S135") // allow multiple continues

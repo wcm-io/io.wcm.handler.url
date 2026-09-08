@@ -19,7 +19,7 @@
  */
 package io.wcm.handler.url.ui;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
@@ -40,7 +40,9 @@ import io.wcm.wcm.commons.util.Path;
  * Model for detecting site root pages.
  */
 @ProviderType
-@Model(adaptables = {SlingHttpServletRequest.class, Resource.class})
+@Model(adaptables = {
+    SlingHttpServletRequest.class, Resource.class
+})
 public final class SiteRoot {
 
   private Page siteRootPage;
@@ -123,7 +125,7 @@ public final class SiteRoot {
    * @return true if given page is the site root page
    */
   public boolean isRootPage(@NotNull Page page) {
-    return StringUtils.equals(page.getPath(), getRootPath());
+    return Strings.CS.equals(page.getPath(), getRootPath());
   }
 
 }

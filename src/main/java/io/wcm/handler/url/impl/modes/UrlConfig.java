@@ -19,6 +19,8 @@
  */
 package io.wcm.handler.url.impl.modes;
 
+import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.adapter.Adaptable;
 
@@ -37,7 +39,7 @@ class UrlConfig {
     SiteConfig config = adaptable.adaptTo(SiteConfig.class);
     if (config != null) {
       this.siteUrl = config.siteUrl();
-      this.siteUrlSecure = StringUtils.defaultString(config.siteUrlSecure(), this.siteUrl);
+      this.siteUrlSecure = Objects.toString(config.siteUrlSecure(), this.siteUrl);
       this.siteUrlAuthor = config.siteUrlAuthor();
     }
     else {

@@ -29,7 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -38,6 +37,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
@@ -112,8 +112,8 @@ class SuffixBuilderTest {
 
   private Resource createResource(String path, String resourceType) {
     return context.create().resource(path, ImmutableValueMap.builder()
-        .put(ResourceResolver.PROPERTY_RESOURCE_TYPE, resourceType)
-        .build());
+      .put(ResourceResolver.PROPERTY_RESOURCE_TYPE, resourceType)
+      .build());
   }
 
   @Test
@@ -235,32 +235,14 @@ class SuffixBuilderTest {
 
 
     // construct suffix for a null resource
-    try {
-      getBuilder().resource(null, baseResource).build();
-      fail("expected IllegalArgumentException");
-    }
-    catch (IllegalArgumentException e) {
-      // expected
-    }
+    assertThrows(IllegalArgumentException.class, () -> getBuilder().resource(null, baseResource).build());
 
     // construct suffix for a null base resource
-    try {
-      getBuilder().resource(targetResource, null).build();
-      fail("expected IllegalArgumentException");
-    }
-    catch (IllegalArgumentException e) {
-      // expected
-    }
+    assertThrows(IllegalArgumentException.class, () -> getBuilder().resource(targetResource, null).build());
 
     // construct suffix with an invalid base resource
-    try {
-      baseResource = createResource("/content/b");
-      getBuilder().resource(baseResource, null).build();
-      fail("expected IllegalArgumentException");
-    }
-    catch (IllegalArgumentException e) {
-      // expected
-    }
+    Resource invalidBaseResource = createResource("/content/b");
+    assertThrows(IllegalArgumentException.class, () -> getBuilder().resource(invalidBaseResource, null).build());
   }
 
   @Test
@@ -354,10 +336,10 @@ class SuffixBuilderTest {
   void testPageSortedMapOfStringString() {
     // construct suffix to a resource with multiple key/value-pairs
     ValueMap map = ImmutableValueMap.builder()
-        .put("abc", 123)
-        .put("ghi", 789)
-        .put("def", 456)
-        .build();
+      .put("abc", 123)
+      .put("ghi", 789)
+      .put("def", 456)
+      .build();
     String suffix = getBuilder().putAll(map).build();
     // suffix should contain all entries, in alphabetical order separated with /
     assertEquals("abc=123" + SUFFIX_PART_DELIMITER + "def=456" + SUFFIX_PART_DELIMITER + "ghi=789", suffix);
@@ -377,9 +359,9 @@ class SuffixBuilderTest {
     String nastyValue2 = NASTY_STRING_VALUE + "2";
 
     ValueMap keyValueMap = ImmutableValueMap.builder()
-        .put(nastyKey1, nastyValue1)
-        .put(nastyKey2, nastyValue2)
-        .build();
+      .put(nastyKey1, nastyValue1)
+      .put(nastyKey2, nastyValue2)
+      .build();
 
     // create resources with nasty (but valid) node name
     Page basePage = context.create().page("/content/a", "template", "title");
@@ -433,9 +415,9 @@ class SuffixBuilderTest {
     String slashValue2 = "my/value2";
 
     ValueMap keyValueMap = ImmutableValueMap.builder()
-        .put(slashKey1, slashValue1)
-        .put(slashKey2, slashValue2)
-        .build();
+      .put(slashKey1, slashValue1)
+      .put(slashKey2, slashValue2)
+      .build();
 
     // create resources with valid node name
     Page basePage = context.create().page("/content/a", "template", "title");
@@ -453,8 +435,8 @@ class SuffixBuilderTest {
 
     // ensure that no slash, not single nor double-escaped found in suffix
     assertTrue(StringUtils.contains(suffix, SUFFIX_PART_DELIMITER), "un-escaped slash found"); // "/" is suffix part delimiter
-    assertFalse(StringUtils.contains(suffix, URL_ENCODED_SLASH), "single-escaped slash found");
-    assertFalse(StringUtils.contains(suffix, DOUBLE_URL_ENCODED_SLASH), "double-escaped slash found");
+    assertFalse(Strings.CS.contains(suffix, URL_ENCODED_SLASH), "single-escaped slash found");
+    assertFalse(Strings.CS.contains(suffix, DOUBLE_URL_ENCODED_SLASH), "double-escaped slash found");
 
     // create SuffixHelper with that suffix, decode it and simulate request to the base page
     String suffixWithExtension = "/" + suffix + ".html";
@@ -563,10 +545,10 @@ class SuffixBuilderTest {
     List<Resource> resources = Arrays.asList(resourceAA, resourceB, resourceC);
 
     ValueMap map = ImmutableValueMap.builder()
-        .put("abc", true)
-        .put("ghi", 123)
-        .put("jkl", NASTY_STRING_VALUE)
-        .build();
+      .put("abc", true)
+      .put("ghi", 123)
+      .put("jkl", NASTY_STRING_VALUE)
+      .build();
 
     SuffixBuilder builder = getBuilder();
     return builder.resources(resources, currentPage.getContentResource()).putAll(map).build();
