@@ -47,7 +47,6 @@ import org.apache.sling.servlethelpers.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import com.day.cq.wcm.api.Page;
@@ -802,36 +801,32 @@ class UrlHandlerImplTest {
    */
   private static MockSlingHttpServletRequest applySimpleMapping(SlingHttpServletRequest request) {
     ResourceResolver spyResolver = spy(request.getResourceResolver());
-    Answer<String> mappingAnswer = new Answer<String>() {
-
-      @Override
-      public String answer(InvocationOnMock invocation) {
-        SlingHttpServletRequest mapRequest;
-        String path;
-        if (invocation.getArguments()[0] instanceof SlingHttpServletRequest) {
-          mapRequest = (SlingHttpServletRequest)invocation.getArguments()[0];
-          path = (String)invocation.getArguments()[1];
-        }
-        else {
-          mapRequest = null;
-          path = (String)invocation.getArguments()[0];
-        }
-        if (Strings.CS.startsWith(path, "/content/unittest/de_test/brand/")) {
-          path = "/" + StringUtils.substringAfter(path, "/content/unittest/de_test/brand/");
-        }
-        if (Strings.CS.startsWith(path, "/content/")) {
-          path = "/" + StringUtils.substringAfter(path, "/content/");
-        }
-        if (mapRequest != null) {
-          path = StringUtils.defaultString(mapRequest.getContextPath()) + path;
-        }
-        path = Externalizer.mangleNamespaces(path);
-        try {
-          return URLEncoder.encode(path, StandardCharsets.UTF_8.name());
-        }
-        catch (UnsupportedEncodingException ex) {
-          throw new RuntimeException(ex);
-        }
+    Answer<String> mappingAnswer = invocation -> {
+      SlingHttpServletRequest mapRequest;
+      String path;
+      if (invocation.getArguments()[0] instanceof SlingHttpServletRequest) {
+        mapRequest = (SlingHttpServletRequest)invocation.getArguments()[0];
+        path = (String)invocation.getArguments()[1];
+      }
+      else {
+        mapRequest = null;
+        path = (String)invocation.getArguments()[0];
+      }
+      if (Strings.CS.startsWith(path, "/content/unittest/de_test/brand/")) {
+        path = "/" + StringUtils.substringAfter(path, "/content/unittest/de_test/brand/");
+      }
+      if (Strings.CS.startsWith(path, "/content/")) {
+        path = "/" + StringUtils.substringAfter(path, "/content/");
+      }
+      if (mapRequest != null) {
+        path = StringUtils.defaultString(mapRequest.getContextPath()) + path;
+      }
+      path = Externalizer.mangleNamespaces(path);
+      try {
+        return URLEncoder.encode(path, StandardCharsets.UTF_8.name());
+      }
+      catch (UnsupportedEncodingException ex) {
+        throw new RuntimeException(ex);
       }
     };
     when(spyResolver.map(anyString())).thenAnswer(mappingAnswer);
@@ -847,13 +842,7 @@ class UrlHandlerImplTest {
    */
   private static MockSlingHttpServletRequest applyHostNameMapping(SlingHttpServletRequest request) {
     ResourceResolver spyResolver = spy(request.getResourceResolver());
-    Answer<String> mappingAnswer = new Answer<String>() {
-
-      @Override
-      public String answer(InvocationOnMock invocation) {
-        return "http://www.domain.com/context" + (String)invocation.getArguments()[1];
-      }
-    };
+    Answer<String> mappingAnswer = invocation -> "http://www.domain.com/context" + (String)invocation.getArguments()[1];
     when(spyResolver.map(any(SlingHttpServletRequest.class), anyString())).thenAnswer(mappingAnswer);
     MockSlingHttpServletRequest newRequest = new MockSlingHttpServletRequest(spyResolver);
     newRequest.setResource(request.getResource());

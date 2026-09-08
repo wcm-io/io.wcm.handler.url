@@ -29,7 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -236,32 +235,14 @@ class SuffixBuilderTest {
 
 
     // construct suffix for a null resource
-    try {
-      getBuilder().resource(null, baseResource).build();
-      fail("expected IllegalArgumentException");
-    }
-    catch (IllegalArgumentException e) {
-      // expected
-    }
+    assertThrows(IllegalArgumentException.class, () -> getBuilder().resource(null, baseResource).build());
 
     // construct suffix for a null base resource
-    try {
-      getBuilder().resource(targetResource, null).build();
-      fail("expected IllegalArgumentException");
-    }
-    catch (IllegalArgumentException e) {
-      // expected
-    }
+    assertThrows(IllegalArgumentException.class, () -> getBuilder().resource(targetResource, null).build());
 
     // construct suffix with an invalid base resource
-    try {
-      baseResource = createResource("/content/b");
-      getBuilder().resource(baseResource, null).build();
-      fail("expected IllegalArgumentException");
-    }
-    catch (IllegalArgumentException e) {
-      // expected
-    }
+    Resource invalidBaseResource = createResource("/content/b");
+    assertThrows(IllegalArgumentException.class, () -> getBuilder().resource(invalidBaseResource, null).build());
   }
 
   @Test

@@ -31,7 +31,6 @@ import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import io.wcm.handler.url.integrator.IntegratorPlaceholder;
@@ -64,13 +63,8 @@ class ExternalizerTest {
 
     // use mocked resolver because request context path change is not respected by sling-mock resolver
     ResourceResolver mockedResolver = mock(ResourceResolver.class);
-    when(mockedResolver.map(same(context.request()), anyString())).then(new Answer<String>() {
-
-      @Override
-      public String answer(InvocationOnMock invocation) {
-        return "/context" + (String)invocation.getArguments()[1];
-      }
-    });
+    when(mockedResolver.map(same(context.request()), anyString()))
+      .then((Answer<String>)invocation -> "/context" + (String)invocation.getArguments()[1]);
 
     assertExternalize("/context/the/path", "/the/path", mockedResolver);
     assertExternalize("/context/the/path?param=1", "/the/path?param=1", mockedResolver);
@@ -118,13 +112,8 @@ class ExternalizerTest {
 
     // use mocked resolver to mock sling mapping
     ResourceResolver mockedResolver = mock(ResourceResolver.class);
-    when(mockedResolver.map(same(context.request()), anyString())).then(new Answer<String>() {
-
-      @Override
-      public String answer(InvocationOnMock invocation) {
-        return "http://www.domain.com/context" + (String)invocation.getArguments()[1];
-      }
-    });
+    when(mockedResolver.map(same(context.request()), anyString()))
+      .then((Answer<String>)invocation -> "http://www.domain.com/context" + (String)invocation.getArguments()[1]);
 
     assertExternalizeUrlWithHost("http://www.domain.com/context/the/path", "/the/path", mockedResolver);
     assertExternalizeUrlWithHost("http://www.domain.com/context/the/path?param=1", "/the/path?param=1", mockedResolver);
